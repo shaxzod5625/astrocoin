@@ -35,7 +35,7 @@
           <i class="ai ai-copy-outline" @click="copy(user.wallet)"></i>
         </div>
         <div class="receive-share">
-          <div class="share-btn"><i class="ai ai-share-outline"></i> Поделиться</div>
+          <button class="share-btn" @click="share"><i class="ai ai-share-outline"></i> Поделиться</button>
         </div>
       </div>
     </div>
@@ -142,6 +142,17 @@ export default {
     openLogOut: false,
   }),
   methods: {
+    async share() {
+      await navigator.share({
+        title: 'Получите бонусы в подарок',
+        text: 'Получите бонусы в подарок при покупке курсов от нашего партнера',
+        url: 'https://google.com/',
+      }).then(e => {
+        console.log(e);
+      }).catch(e => {
+        console.log(e);
+      })
+    },
     sendCoin() {
       this.$emit('sendCoin', {
         wallet_to: this.wallet_to,

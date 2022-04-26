@@ -160,10 +160,7 @@
           </div>
         </div>
       </div>
-      <Modals
-        :user="user"
-        @sendCoin="sendCoin"
-      />
+      <Modals :user="user" @sendCoin="sendCoin"/>
     </div>
   </div>
 </template>
