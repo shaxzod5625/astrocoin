@@ -50,6 +50,7 @@ body {
 #log-out,
 #cheque-coin,
 .form-control input,
+.swal2-container,
 #user-app{
     font-family: 'Fredoka', sans-serif;
 }

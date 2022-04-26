@@ -4,6 +4,24 @@
 @import url('./register.css');
 @import url('./userpage.css');
 
+.swal2-container {
+    margin-right: 100px;
+}
+
+.swal2-popup.swal2-toast {
+    border-radius: 10px;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+    margin: 0 0.5em;
+}
+
+.swal2-popup.swal2-toast .swal2-html-container {
+    margin: 0.2em 0.5em !important;
+}
+
 .top-toolbar {
     background-color: rgba(200,200,200,0.15);
     height: 150px;
@@ -50,6 +68,13 @@
     width: 132px;
     height: 40px;
     background: url("/src/assets/wallet.svg");
+    background-size: cover;
+}
+
+.corp-logo {
+    width: 164px;
+    height: 40px;
+    background: url("/src/assets/astrum.svg");
     background-size: cover;
 }
 
@@ -606,6 +631,12 @@
     transform: scale(1.1);
 }
 
+#send-coin .modal-body .user-info {
+    margin: 5px 10px 10px;
+    color: #333;
+    font-size: 15px;
+}
+
 #send-coin .modal-body .qr-view {
     display: flex;
     flex-direction: column;
@@ -670,12 +701,13 @@
 #cheque-coin .top-brand {
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 22px;
     border-bottom: 1px solid #ccc;
 }
 
 #cheque-coin .top-brand .corp-logo {
-    transform: scale(0.7);
+    width: 123px;
+    height: 30px;
 }
 
 #cheque-coin .cheque-header {
