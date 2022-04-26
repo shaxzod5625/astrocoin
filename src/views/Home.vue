@@ -140,7 +140,7 @@
                 <div class="transfers-date">
                   {{ date }}
                 </div>
-                <div v-for="item in history" :key="item.id" :class="item.status == 'failed' ? 'failed-coin' : (item.wallet_to == user.wallet && item.status != 'failed') ? 'receive-coin' : (item.wallet_to == user.wallet && item.status != 'failed') ? 'remove-coin' : ''">
+                <div v-for="item in history" :key="item.id" :class="item.status == 'failed' ? 'failed-coin' : item.status == 'returned' ? 'receive-coin' : 'remove-coin'">
                   <div class="status-icon">
                     <i :class="item.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
                   </div>
@@ -264,7 +264,7 @@ export default {
       this.$store.state.userModal = false
       document.querySelector('#modal-back').style.background = '';
       document.querySelector('.main-tools').style.zIndex = '1';
-    }
+    },
   }
 }
 </script>
