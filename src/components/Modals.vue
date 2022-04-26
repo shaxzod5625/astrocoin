@@ -55,8 +55,9 @@
           <i class="ai ai-scan" @click="openScan"></i>
           <p>{{ fio }}</p>
         </div>
-        <div v-if="scanOpen">
+        <div v-if="scanOpen" class="qr-view">
           <qrcode-stream @decode="onDecode" :track="paintOutline" @init="onInit"/>
+          <button class="close-modal">Отменить</button>
         </div>
         <div class="send-coin">
           <div class="send-label">Сумма</div>
@@ -200,7 +201,7 @@ export default {
       }
     },
     async onInit(promise) {
-      try {
+      /*try {
         await promise
       } catch (error) {
         this.scanOpen = false
@@ -221,7 +222,7 @@ export default {
         } else {
           Toast.fire(`ERROR: Camera error (${error.name})`, '', 'error')
         }
-      }
+      }*/
     },
     paintOutline (detectedCodes, ctx) {
       for (const detectedCode of detectedCodes) {

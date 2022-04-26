@@ -60,7 +60,19 @@ body {
 #cheque-coin,
 #send-coin,
 #log-out,
+button,
 .receive-hash .ai,
 .story,.form-control input{
     transition: .3s;
+}
+
+input:focus-visible,
+textarea:focus-visible {
+    box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
+}
+
+button:focus-visible {
+    background: #4527ae;
+    color: #fff;
+    box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
 }

@@ -536,14 +536,6 @@
     border-radius: 10px;
 }
 
-.modal-body button:focus-visible,
-.modal-body input:focus-visible,
-.modal-body textarea:focus-visible,
-.modal-body .receive-hash input:focus-visible {
-    box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
-}
-
-
 .modal-body .send-comment textarea {
     border: none;
     min-width: 240px;
@@ -600,6 +592,7 @@
     border-radius: 12px;
     visibility: hidden;
     opacity: 0;
+    overflow: hidden;
     transform: scale(0.9);
     box-shadow: 0 0 15px #c2c2c2;
     position: absolute;
@@ -611,6 +604,42 @@
     visibility: visible;
     opacity: 1;
     transform: scale(1.1);
+}
+
+#send-coin .modal-body .qr-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+}
+
+#send-coin .qr-view .qrcode-stream-wrapper {
+    width: 250px;
+    height: 250px;
+    background: #e2e2e2;
+    border-radius: 10px;
+}
+
+#send-coin .qr-view .close-modal {
+    border: none;
+    outline: none;
+    padding: 12px 55px;
+    margin-top: 70px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#send-coin .qr-view .close-modal:hover {
+    background: #4527ae;
+    color: #fff;
+    box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
 }
 
 
