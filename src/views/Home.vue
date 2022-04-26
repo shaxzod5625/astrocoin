@@ -250,7 +250,13 @@ export default {
     },
     //
     openUser() {
+      // console.log(document.querySelector('#user-menu').classList[0] == 'active')
       this.$store.state.userModal = !this.$store.state.userModal
+      if (document.querySelector('#user-menu').classList[0] == 'active') {
+        document.querySelector('#user-menu').style.background = ''
+      }
+      // let a = document.getElementById('user-menu')
+      // console.log(a.classList[0] == 'active')
     },
     submitModal() {
       this.$store.state.receiveModal = !this.$store.state.receiveModal

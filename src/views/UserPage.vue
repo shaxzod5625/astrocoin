@@ -1,6 +1,10 @@
 <template>
   <div id="user-app">
     <div class="user-page">
+      <router-link to="/" class="close-page">
+        <i class="ai ai-arrow-back"></i>
+        <div class="close-title">Back</div>
+      </router-link>
       <div class="user-photo">
         <img src="../assets/default-user-pic.png" alt="" class="user-pic">
         <div class="edit-user-pic">

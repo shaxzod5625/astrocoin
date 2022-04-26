@@ -115,10 +115,10 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    background: rgba(87, 51, 209, 0.5);
+    background: rgb(87, 51, 209);
     font-size: 22px;
-    fill: #5733d1;
-    stroke: #5733d1;
+    fill: #fff;
+    stroke: #fff;
     width: 45px;
     height: 45px;
     border-radius: 50px;
@@ -297,7 +297,7 @@
     justify-content: center;
     padding: 10px;
     position: absolute;
-    width: 60vw;
+    width: 55vw;
 }
 
 #modal-back.active {
@@ -500,6 +500,9 @@
 }
 
 .modal-body .receive-qrcode {
+    display: flex;
+    justify-content: center;
+    align-items: center;
     background-color: #fff;
     width: 250px;
     height: 250px;
@@ -533,8 +536,10 @@
     border-radius: 10px;
 }
 
+.modal-body button:focus-visible,
 .modal-body input:focus-visible,
-.modal-body textarea:focus-visible {
+.modal-body textarea:focus-visible,
+.modal-body .receive-hash input:focus-visible {
     box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
 }
 
@@ -548,10 +553,6 @@
     outline: none;
     padding: 10px 12px;
     border-radius: 10px;
-}
-
-.modal-body .receive-hash input:focus-visible {
-    box-shadow: 0 0 0 2px rgba(87, 51, 209, 0.5);
 }
 
 .modal-body .receive-hash .ai {
@@ -583,6 +584,9 @@
 
 .modal-body .receive-share .share-btn {
     background-color: #5733d1;
+    width: 100%;
+    outline: none;
+    border: none;
     color: #fff;
     padding: 10px;
     text-align: center;
@@ -609,9 +613,102 @@
     transform: scale(1.1);
 }
 
+
+#cheque-coin {
+    width: 20vw;
+    background-color: rgba(255, 255, 255, 0.7);
+    backdrop-filter: blur(10px);
+    border-radius: 12px;
+    visibility: hidden;
+    opacity: 0;
+    transform: scale(0.9);
+    box-shadow: 0 0 15px #c2c2c2;
+    position: absolute;
+    top: 155px;
+    z-index: 8;
+}
+
+#cheque-coin.active {
+    visibility: visible;
+    opacity: 1;
+    transform: scale(1.1);
+}
+
+#cheque-coin .modal-body {
+    padding:0 20px 20px;
+}
+
+#cheque-coin .top-brand {
+    display: flex;
+    justify-content: center;
+    padding: 20px;
+    border-bottom: 1px solid #ccc;
+}
+
+#cheque-coin .top-brand .corp-logo {
+    transform: scale(0.7);
+}
+
+#cheque-coin .cheque-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+#cheque-coin .cheque-header .cheque-status-icon {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: #FFF;
+    width: 45px;
+    height: 45px;
+    border-radius: 50px;
+    font-size: 25px;
+}
+
+#cheque-coin .cheque-date {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    margin-left: 10px;
+}
+
+#cheque-coin .cheque-date .cheque-title {
+    font-size: 20px;
+    font-weight: 500;
+}
+
+#cheque-coin .cheque-date .cheque-price {
+    font-size: 17px;
+}
+
+#cheque-coin .cheque-block {
+    margin: 15px 0;
+}
+
+#cheque-coin .cheque-block .cheque-title {
+    color: #888;
+    padding-bottom: 5px;
+    font-size: 16px;
+}
+
+#cheque-coin .cheque-block .cheque-content {
+    color: #000;
+    font-size: 18px;
+}
+
 @media screen and (max-width: 1370px) {
     #header, #main, #modals {
         width: 70vw;
+    }
+    #cheque-coin {
+        width: 30vw;
+    }
+}
+
+@media screen and (max-width: 1000px) {
+    #cheque-coin {
+        width: auto;
     }
 }
 
