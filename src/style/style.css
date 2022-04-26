@@ -261,7 +261,7 @@
 
 .failed-coin .status-icon .ai,
 .receive-coin .status-icon .ai,
-.remove-coin .status-icon .ai {
+.remove-coin .status-icon {
     font-size: 25px;
 }
 

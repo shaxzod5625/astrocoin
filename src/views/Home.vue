@@ -142,12 +142,11 @@
                 </div>
                 <div v-for="item in history" :key="item.id" :class="item.status == 'failed' ? 'failed-coin' : item.status == 'returned' ? 'receive-coin' : 'remove-coin'">
                   <div class="status-icon">
-                    <i :class="item.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
+                    <i :class="item.status == 'failed' ? 'ai ai-warning-outline' : item.status == 'returned' ? 'ai ai-add' : 'ai ai-remove'"></i>
                   </div>
                   <div class="status-content">
                     <div class="status-name">{{ item.title }}</div>
-                    <div class="status-coin">{{ item.wallet_to == user.wallet ? '+' : '-' }}{{ item.amount }} ASC</div>
-                    <!-- <div class="css">{{ sortDate(item.date) }}</div> -->
+                    <div class="status-coin">{{ item.amount }} ASC</div>
                   </div>
                 </div>
               </div>

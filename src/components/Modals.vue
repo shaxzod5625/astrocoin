@@ -13,12 +13,6 @@
       </div>
       <div class="hr"></div>
       <ul class="other-user-menu">
-        <li class="menu-item"><a href="#">Astrum ID</a></li>
-        <li class="menu-item"><a href="#">Astrum Shop</a></li>
-        <li class="menu-item"><a href="#">Настройки</a></li>
-      </ul>
-      <div class="hr"></div>
-      <ul class="other-user-menu">
         <li class="menu-item"><a @click.prevent="logout" href="#" class="log-out-btn">Выйти</a></li>
       </ul>
     </div>
@@ -62,9 +56,7 @@
           <p>{{ fio }}</p>
         </div>
         <div v-if="scanOpen">
-          <qrcode-stream @decode="onDecode" :track="paintOutline">
-            <!-- <button @click="switchCamera">switch</button> -->
-          </qrcode-stream>
+          <qrcode-stream @decode="onDecode" :track="paintOutline" @init="onInit"/>
         </div>
         <div class="send-coin">
           <div class="send-label">Сумма</div>
@@ -146,6 +138,30 @@ export default {
           break
       }
     },
+    async onInit(promise) {
+      try {
+        await promise
+      } catch (error) {
+        this.scanOpen = false
+        if (error.name === 'NotAllowedError') {
+          Toast.fire("ERROR: you need to grant camera access permission", '', 'error')
+        } else if (error.name === 'NotFoundError') {
+          Toast.fire("ERROR: no camera on this device", '', 'error')
+        } else if (error.name === 'NotSupportedError') {
+          Toast.fire("ERROR: secure context required (HTTPS, localhost)", '', 'error')
+        } else if (error.name === 'NotReadableError') {
+          Toast.fire("ERROR: is the camera already in use?", '', 'error')
+        } else if (error.name === 'OverconstrainedError') {
+          Toast.fire("ERROR: installed cameras are not suitable", '', 'error')
+        } else if (error.name === 'StreamApiNotSupportedError') {
+          Toast.fire("ERROR: Stream API is not supported in this browser", '', 'error')
+        } else if (error.name === 'InsecureContextError') {
+          Toast.fire('ERROR: Camera access is only permitted in secure context. Use HTTPS or localhost rather than HTTP.', '', 'error')
+        } else {
+          Toast.fire(`ERROR: Camera error (${error.name})`, '', 'error')
+        }
+      }
+    },
     paintOutline (detectedCodes, ctx) {
       for (const detectedCode of detectedCodes) {
         const [ firstPoint, ...otherPoints ] = detectedCode.cornerPoints
@@ -165,16 +181,19 @@ export default {
   },
   watch: {
     scanResult(value) {
-      setTimeout(() => {
-        this.wallet_to = value;
-        this.scanOpen = false;
-      }, 1000);
+      this.wallet_to = value;
+      this.scanOpen = false;
     },
-    async wallet_to(value) {
+    wallet_to(value) {
       this.scanResult = value;
       if (value.length == 32) {
-        await this.$store.dispatch('checkWallet', value);
-        this.fio = this.$store.state.fio;
+        this.$store.dispatch('checkWallet', value).then(e => {
+          this.fio = this.$store.state.fio;
+        }).catch(e => {
+          Toast.fire('Неверный кошелек', '', 'error')
+        })
+      } else {
+        this.fio = ''
       }
     }
   }
