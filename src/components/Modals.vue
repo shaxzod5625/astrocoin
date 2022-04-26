@@ -1,6 +1,6 @@
 <template>
   <div id="modals" class="modal">
-    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal}"></div>
+    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.userModal || this.$store.state.confirmLogout}"></div>
     <div id="user-menu" :class="{active: this.$store.state.userModal}">
       <div class="user-person">
         <div class="user-person-pic">
@@ -33,7 +33,7 @@
       </div>
       <div class="modal-body">
         <div class="receive-qrcode">
-          <qrcode-vue :value="user.wallet" :size="240" level="H"></qrcode-vue>
+          <qrcode-vue :value="user.wallet" :size="220" level="H"></qrcode-vue>
         </div>
         <div class="receive-hash">
           <div class="receiver-label">Hash</div>
@@ -79,6 +79,56 @@
         </div>
       </div>
     </div>
+    <div id="cheque-coin">
+      <div class="top-brand">
+        <div class="corp-logo"></div>
+      </div>
+      <div class="modal-body">
+        <div class="cheque-header">
+          <div class="cheque-status-icon bg-failed">
+            <i class="ai ai-remove"></i>
+          </div>
+          <div class="cheque-date">
+            <div class="cheque-title">Перевод</div>
+            <div class="cheque-price">-100 ASC</div>
+          </div>
+        </div>
+        <div class="cheque-block">
+          <div class="cheque-title">Сервис</div>
+          <div class="cheque-content">Transfer to student</div>
+        </div>
+        <div class="cheque-block">
+          <div class="cheque-title">Дата</div>
+          <div class="cheque-content">15/04/2020 08:15</div>
+        </div>
+        <div class="cheque-block">
+          <div class="cheque-title">Данные получателя</div>
+          <div class="cheque-content">Muhammadiy Khudoyorkhonov</div>
+        </div>
+        <div class="cheque-block">
+          <div class="cheque-title">Кошелек получателя</div>
+          <div class="cheque-content">ASdiji23h9hrn2i3y4823hrh</div>
+        </div>
+        <div class="cheque-block">
+          <div class="cheque-title">Статус</div>
+          <div class="cheque-content text-success">Успешно</div>
+        </div>
+      </div>
+    </div>
+    <div id="log-out" :class="openLogOut ? 'active' : ''">
+      <div class="modal-content">
+        <div class="modal-header">
+          <div class="modal-title">Выйти</div>
+        </div>
+        <div class="modal-body">
+          <div class="log-out-query">Вы хотите выйти аккаунта и завершить сеанс?</div>
+        </div>
+      </div>
+      <div class="modal-tools">
+        <div class="btn modal-close" @click="closeModals">Отменить</div>
+        <div class="btn log-out-verify" @click="this.$store.state.confirmLogout = true">Выйти</div>
+      </div>
+    </div>
   </div>
 </template>
 <script>
@@ -96,7 +146,8 @@ export default {
     comment: '',
     scanResult: '',
     scanOpen: false,
-    fullscreen: true
+    fullscreen: true,
+    openLogOut: false,
   }),
   methods: {
     sendCoin() {
@@ -132,9 +183,8 @@ export default {
     onDecode (result) {
       this.scanResult = result
     },
-    async logout() {
-      await this.$store.dispatch('logout');
-      this.$router.push('/login');
+    logout() {
+      this.openLogOut = true
     },
     switchCamera () {
       switch (this.camera) {
@@ -176,7 +226,7 @@ export default {
         await this.$store.dispatch('checkWallet', value);
         this.fio = this.$store.state.fio;
       }
-    }
+    },
   }
 }
 </script>

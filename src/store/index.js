@@ -17,6 +17,7 @@ export default new Vuex.Store({
     receiveModal: false,
     sendModal: false,
     userModal: false,
+    confirmLogout: false,
     fio: ''
   },
   getters: {},
