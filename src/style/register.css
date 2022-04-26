@@ -1,0 +1,127 @@
+#container #signup-page {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  margin-top: 5%;
+  background: #fff;
+  border-radius: 12px;
+  padding: 15px;
+  width: 450px;
+  box-shadow: 0 0 15px #eee;
+}
+
+#signup-page .signup-header {
+  margin: 35px;
+}
+
+#signup-page .signup-form {
+  display: flex;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.signup-form .signup-desc {
+  color: #bababa;
+  padding: 0 10px;
+}
+
+.double-input {
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+}
+
+.double-input .form-control + .form-control {
+  padding-left: 55px !important;
+}
+
+.double-input .form-control {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+}
+
+.form-modal {
+  margin-top: 10px;
+}
+
+.form-control {
+  width: 390px;
+  margin: 10px 0;
+}
+
+.form-control label {
+  display: block;
+  color: #aaa;
+  padding: 5px 10px;
+}
+
+.form-control input {
+  width: 100%;
+  border: none;
+  border-radius: 10px;
+  background: #eee;
+  padding: 12px 18px;
+  font-size: 16px;
+  outline: none;
+}
+
+.form-control select {
+  width: 109%;
+  border: none;
+  border-radius: 10px;
+  background: #eee;
+  padding: 12px 18px;
+  font-size: 16px;
+  outline: none;
+}
+
+.form-control select:focus-visible,
+.form-control input:focus-visible {
+  box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
+}
+
+.form-control.submit-btn {
+  width: 420px;
+}
+
+.form-control.submit-btn input {
+  width: 100%;
+  background: #5733d1;
+  color: #fff;
+  margin-top: 35px;
+  cursor: pointer;
+  outline: none !important;
+}
+
+.form-control.submit-btn input:hover {
+  background: #4527ae;
+}
+
+.forgot-pass {
+  display: block;
+  padding: 5px 10px;
+  text-decoration: none;
+  color: #5733d1;
+  width: auto;
+  outline: none;
+}
+
+.forgot-pass:hover {
+  color: #4527ae;
+}
+
+@media screen and (max-width: 518px) {
+  body {
+      background: #fff;
+  }
+  .app-logo {
+      transform: scale(1.2);
+  }
+  #container #signup-page {
+      box-shadow: none;
+      transform: scale(0.8);
+      margin-top: -10%;
+  }
+}

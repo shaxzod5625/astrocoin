@@ -1,0 +1,39 @@
+.font-default,
+.coin-currency,
+.user-info,
+.other-user-menu,
+#receive-coin,
+#send-coin,
+.main-tools,
+.transfers-date,
+.failed-coin,
+.receive-coin,
+.remove-coin,
+#login-page,
+#signup-page,
+#log-out,
+.form-control input{
+    font-family: 'Fredoka', sans-serif;
+}
+
+.hr {
+    background: #e2e2e2;
+    height: 1px;
+    margin: 10px 8px;
+}
+
+#user-menu,
+#modal-back,
+#receive-coin,
+#send-coin,
+#log-out,
+.receive-hash .ai,
+.story,.form-control input{
+    transition: .3s;
+}
+
+body {
+    background: #f4f4f4;
+    padding: 0;
+    margin: 0;
+}
