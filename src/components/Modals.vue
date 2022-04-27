@@ -1,6 +1,6 @@
 <template>
   <div id="modals" class="modal">
-    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.userModal || this.$store.state.confirmLogout}"></div>
+    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.confirmLogout}"></div>
     <div id="user-menu" :class="{active: this.$store.state.userModal}">
       <div class="user-person">
         <div class="user-person-pic">
@@ -57,7 +57,7 @@
         </div>
         <div v-if="scanOpen" class="qr-view">
           <qrcode-stream @decode="onDecode" :track="paintOutline" @init="onInit"/>
-          <button class="close-modal">Отменить</button>
+          <button class="close-modal" @click="scanOpen = false">Отменить</button>
         </div>
         <div class="send-coin">
           <div class="send-label">Сумма</div>
