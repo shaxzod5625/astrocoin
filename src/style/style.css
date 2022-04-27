@@ -4,6 +4,24 @@
 @import url('./register.css');
 @import url('./userpage.css');
 
+.swal2-container {
+    margin-right: 100px;
+}
+
+.swal2-popup.swal2-toast {
+    border-radius: 10px;
+    display: flex !important;
+    align-items: center !important;
+}
+
+.swal2-popup.swal2-toast .swal2-title {
+    margin: 0 0.5em;
+}
+
+.swal2-popup.swal2-toast .swal2-html-container {
+    margin: 0.2em 0.5em !important;
+}
+
 .top-toolbar {
     background-color: rgba(200,200,200,0.15);
     height: 150px;
@@ -50,6 +68,13 @@
     width: 132px;
     height: 40px;
     background: url("/src/assets/wallet.svg");
+    background-size: cover;
+}
+
+.corp-logo {
+    width: 164px;
+    height: 40px;
+    background: url("/src/assets/astrum.svg");
     background-size: cover;
 }
 
@@ -536,14 +561,6 @@
     border-radius: 10px;
 }
 
-.modal-body button:focus-visible,
-.modal-body input:focus-visible,
-.modal-body textarea:focus-visible,
-.modal-body .receive-hash input:focus-visible {
-    box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
-}
-
-
 .modal-body .send-comment textarea {
     border: none;
     min-width: 240px;
@@ -600,6 +617,7 @@
     border-radius: 12px;
     visibility: hidden;
     opacity: 0;
+    overflow: hidden;
     transform: scale(0.9);
     box-shadow: 0 0 15px #c2c2c2;
     position: absolute;
@@ -611,6 +629,48 @@
     visibility: visible;
     opacity: 1;
     transform: scale(1.1);
+}
+
+#send-coin .modal-body .user-info {
+    margin: 5px 10px 10px;
+    color: #333;
+    font-size: 15px;
+}
+
+#send-coin .modal-body .qr-view {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: #fff;
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    z-index: 9;
+}
+
+#send-coin .qr-view .qrcode-stream-wrapper {
+    width: 250px;
+    height: 250px;
+    background: #e2e2e2;
+    border-radius: 10px;
+}
+
+#send-coin .qr-view .close-modal {
+    border: none;
+    outline: none;
+    padding: 12px 55px;
+    margin-top: 70px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+#send-coin .qr-view .close-modal:hover {
+    background: #4527ae;
+    color: #fff;
+    box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
 }
 
 
@@ -641,12 +701,13 @@
 #cheque-coin .top-brand {
     display: flex;
     justify-content: center;
-    padding: 20px;
+    padding: 22px;
     border-bottom: 1px solid #ccc;
 }
 
 #cheque-coin .top-brand .corp-logo {
-    transform: scale(0.7);
+    width: 123px;
+    height: 30px;
 }
 
 #cheque-coin .cheque-header {

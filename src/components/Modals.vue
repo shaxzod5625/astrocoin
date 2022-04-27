@@ -53,10 +53,11 @@
           <div class="send-label">Wallet ID</div>
           <input type="text" v-model="wallet_to">
           <i class="ai ai-scan" @click="openScan"></i>
-          <p>{{ fio }}</p>
+          <p class="user-info">{{ fio }}</p>
         </div>
-        <div v-if="scanOpen">
+        <div v-if="scanOpen" class="qr-view">
           <qrcode-stream @decode="onDecode" :track="paintOutline" @init="onInit"/>
+          <button class="close-modal">Отменить</button>
         </div>
         <div class="send-coin">
           <div class="send-label">Сумма</div>
@@ -211,7 +212,7 @@ export default {
         if (error.name === 'NotAllowedError') {
           Toast.fire("ERROR: you need to grant camera access permission", '', 'error')
         } else if (error.name === 'NotFoundError') {
-          Toast.fire("ERROR: no camera on this device", '', 'error')
+          Toast.fire("Ошибка: На вашем устройстве не найдено камера!", '', 'error')
         } else if (error.name === 'NotSupportedError') {
           Toast.fire("ERROR: secure context required (HTTPS, localhost)", '', 'error')
         } else if (error.name === 'NotReadableError') {
