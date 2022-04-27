@@ -1,6 +1,6 @@
 <template>
   <div id="modals" class="modal">
-    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.userModal || this.$store.state.confirmLogout}"></div>
+    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.confirmLogout}"></div>
     <div id="user-menu" :class="{active: this.$store.state.userModal}">
       <div class="user-person">
         <div class="user-person-pic">
