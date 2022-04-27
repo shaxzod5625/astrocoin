@@ -142,16 +142,20 @@ export default {
     openLogOut: false,
   }),
   methods: {
-    async share() {
-      await navigator.share({
-        title: 'Получите бонусы в подарок',
-        text: 'Получите бонусы в подарок при покупке курсов от нашего партнера',
-        url: 'https://google.com/',
-      }).then(e => {
-        console.log(e);
-      }).catch(e => {
-        console.log(e);
-      })
+    share() {
+      if (navigator.hare) {
+        navigator.share({
+          title: 'Получите бонусы в подарок',
+          text: 'Получите бонусы в подарок при покупке курсов от нашего партнера',
+          url: 'https://google.com/',
+        }).then(e => {
+          alert('success')
+        }).catch(e => {
+          console.log(e);
+        })
+      } else {
+        alert('asdfasdf')
+      }
     },
     sendCoin() {
       this.$emit('sendCoin', {
