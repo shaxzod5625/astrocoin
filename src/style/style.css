@@ -695,7 +695,7 @@
     opacity: 0;
     transform: scale(0.9);
     box-shadow: 0 0 15px #c2c2c2;
-    position: absolute;
+    position: fixed;
     top: 155px;
     z-index: 8;
 }
