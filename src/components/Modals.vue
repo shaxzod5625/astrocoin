@@ -1,7 +1,7 @@
 <template>
   <div id="modals" class="modal">
-    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.confirmLogout}"></div>
-    <div id="user-menu" :class="{active: this.$store.state.userModal}">
+    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.confirmLogout || this.$store.state.openCheque}"></div>
+    <div id="user-menu" :class="{ active: this.$store.state.userModal }">
       <div class="user-person">
         <div class="user-person-pic">
           <img src="../assets/default-user-pic.png" class="user-pic" alt="">
@@ -13,10 +13,10 @@
       </div>
       <div class="hr"></div>
       <ul class="other-user-menu">
-        <li class="menu-item"><a @click.prevent="logout" href="#" class="log-out-btn">Выйти</a></li>
+        <li class="menu-item"><a @click.prevent="openConfirm" href="#" class="log-out-btn">Выйти</a></li>
       </ul>
     </div>
-    <div id="receive-coin" :class="{active: this.$store.state.receiveModal}">
+    <div id="receive-coin" :class="{ active: this.$store.state.receiveModal }">
       <div class="modal-header">
         <div class="modal-title">Получить</div>
         <div class="modal-tools">
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div id="send-coin" :class="this.$store.state.sendModal ? 'active' : ''">
+    <div id="send-coin" :class="{ active: this.$store.state.sendModal }">
       <div class="modal-header">
         <div class="modal-title">Отправить</div>
         <div class="modal-tools">
@@ -57,7 +57,7 @@
         </div>
         <div v-if="scanOpen" class="qr-view">
           <qrcode-stream @decode="onDecode" :track="paintOutline" @init="onInit"/>
-          <button class="close-modal">Отменить</button>
+          <button class="close-modal" @click="scanOpen = false">Отменить</button>
         </div>
         <div class="send-coin">
           <div class="send-label">Сумма</div>
@@ -72,35 +72,39 @@
         </div>
       </div>
     </div>
-    <div id="cheque-coin">
+    <div id="cheque-coin" :class="{ active: this.$store.state.openCheque }">
       <div class="top-brand">
         <div class="corp-logo"></div>
       </div>
       <div class="modal-body">
         <div class="cheque-header">
-          <div class="cheque-status-icon bg-failed">
-            <i class="ai ai-remove"></i>
+          <div class="cheque-status-icon" :class="cheque.status == 'failed' ? 'bg-failed' : cheque.wallet_to == user.wallet ? 'bg-success' : 'bg-remove' ">
+            <i :class="cheque.status == 'failed' ? 'ai ai-warning-outline' : cheque.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
           </div>
           <div class="cheque-date">
-            <div class="cheque-title">Перевод</div>
-            <div class="cheque-price">-100 ASC</div>
+            <div class="cheque-title">{{ cheque.title }}</div>
+            <div class="cheque-price">{{ cheque.amount }} ASC</div>
           </div>
         </div>
         <div class="cheque-block">
           <div class="cheque-title">Сервис</div>
-          <div class="cheque-content">Transfer to student</div>
+          <div class="cheque-content">{{ cheque.type }}</div>
         </div>
         <div class="cheque-block">
           <div class="cheque-title">Дата</div>
-          <div class="cheque-content">15/04/2020 08:15</div>
+          <div class="cheque-content">{{ sortDate(cheque.date) }}</div>
         </div>
         <div class="cheque-block">
           <div class="cheque-title">Данные получателя</div>
-          <div class="cheque-content">Muhammadiy Khudoyorkhonov</div>
+          <div class="cheque-content">{{ getNameSurname(cheque.wallet_to) }}</div>
         </div>
         <div class="cheque-block">
           <div class="cheque-title">Кошелек получателя</div>
-          <div class="cheque-content">ASdiji23h9hrn2i3y4823hrh</div>
+          <div class="cheque-content">{{ cheque.wallet_to }}</div>
+        </div>
+        <div class="cheque-block">
+          <div class="cheque-title">Коментарий</div>
+          <div class="cheque-content">{{ cheque.comment }}</div>
         </div>
         <div class="cheque-block">
           <div class="cheque-title">Статус</div>
@@ -119,16 +123,17 @@
       </div>
       <div class="modal-tools">
         <div class="btn modal-close" @click="closeModals">Отменить</div>
-        <div class="btn log-out-verify" @click="this.$store.state.confirmLogout = true">Выйти</div>
+        <div class="btn log-out-verify" @click="logout">Выйти</div>
       </div>
     </div>
   </div>
 </template>
 <script>
 import { QrcodeStream } from 'vue-qrcode-reader'
+import moment from 'moment'
 export default {
   name: "Modals",
-  props: ['user'],
+  props: ['user', 'cheque'],
   components: {
     QrcodeStream
   },
@@ -143,16 +148,29 @@ export default {
     openLogOut: false,
   }),
   methods: {
-    async share() {
-      await navigator.share({
-        title: 'Получите бонусы в подарок',
-        text: 'Получите бонусы в подарок при покупке курсов от нашего партнера',
-        url: 'https://google.com/',
-      }).then(e => {
-        console.log(e);
-      }).catch(e => {
-        console.log(e);
+    sortDate(date) {
+      return moment(date).format('DD/MM/YYYY HH:mm')
+    },
+    async getNameSurname(wallet) {
+      await this.$store.dispatch('checkWallet', wallet).then(res => {
+        this.fio = this.$store.state.fio;
       })
+      return this.fio
+    },
+    share() {
+      if (navigator.hare) {
+        navigator.share({
+          title: 'Получите бонусы в подарок',
+          text: 'Получите бонусы в подарок при покупке курсов от нашего партнера',
+          url: 'https://google.com/',
+        }).then(e => {
+          alert('success')
+        }).catch(e => {
+          console.log(e);
+        })
+      } else {
+        alert('asdfasdf')
+      }
     },
     sendCoin() {
       this.$emit('sendCoin', {
@@ -166,9 +184,11 @@ export default {
       this.closeModals()
     },
     closeModals() {
+      this.openLogOut = false
       this.$store.state.sendModal = false
       this.$store.state.receiveModal = false
       this.$store.state.userModal = false
+      this.$store.state.openCheque = false
       document.querySelector('#modal-back').style.background = ''
       document.querySelector('.main-tools').style.zIndex = '1'
     },
@@ -187,8 +207,13 @@ export default {
     onDecode (result) {
       this.scanResult = result
     },
-    logout() {
+    openConfirm() {
       this.openLogOut = true
+      this.$store.state.userModal = false
+    },
+    async logout() {
+      await this.$store.dispatch('logout')
+      this.$router.push('/login')
     },
     switchCamera () {
       switch (this.camera) {

@@ -643,6 +643,7 @@
     justify-content: center;
     align-items: center;
     background: #fff;
+    animation: 0.4s qr-view;
     position: absolute;
     top: 0;
     left: 0;
@@ -656,6 +657,18 @@
     height: 250px;
     background: #e2e2e2;
     border-radius: 10px;
+    overflow: hidden;
+}
+
+@keyframes qr-view {
+    0% {
+        opacity: 0;
+        transform: scale(0.8);
+    }
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
 }
 
 #send-coin .qr-view .close-modal {
@@ -670,7 +683,6 @@
 #send-coin .qr-view .close-modal:hover {
     background: #4527ae;
     color: #fff;
-    box-shadow: 0 0 0 2px rgba(87, 51, 209, .5);
 }
 
 
@@ -683,7 +695,7 @@
     opacity: 0;
     transform: scale(0.9);
     box-shadow: 0 0 15px #c2c2c2;
-    position: absolute;
+    position: fixed;
     top: 155px;
     z-index: 8;
 }

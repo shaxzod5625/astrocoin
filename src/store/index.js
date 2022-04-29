@@ -18,6 +18,7 @@ export default new Vuex.Store({
     sendModal: false,
     userModal: false,
     confirmLogout: false,
+    openCheque: false,
     fio: ''
   },
   getters: {},
@@ -78,11 +79,10 @@ export default new Vuex.Store({
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }).then(res => {
-          commit('removeToken')
         }).catch(e => {
           commit('error', e.response.data)
         })
+        commit('removeToken')
       } catch (e) {
         console.log(e);
         throw e;

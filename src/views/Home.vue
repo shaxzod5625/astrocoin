@@ -140,9 +140,9 @@
                 <div class="transfers-date">
                   {{ date }}
                 </div>
-                <div v-for="item in history" :key="item.id" :class="item.status == 'failed' ? 'failed-coin' : item.status == 'returned' ? 'receive-coin' : 'remove-coin'">
+                <div v-for="item in history" @click="setCheque(item)" :key="item.id" :class="item.status == 'failed' ? 'failed-coin' : item.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
                   <div class="status-icon">
-                    <i :class="item.status == 'failed' ? 'ai ai-warning-outline' : item.status == 'returned' ? 'ai ai-add' : 'ai ai-remove'"></i>
+                    <i :class="item.status == 'failed' ? 'ai ai-warning-outline' : item.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
                   </div>
                   <div class="status-content">
                     <div class="status-name">{{ item.title }}</div>
@@ -160,7 +160,7 @@
           </div>
         </div>
       </div>
-      <Modals :user="user" @sendCoin="sendCoin"/>
+      <Modals :user="user" @sendCoin="sendCoin" :cheque="cheque"/>
     </div>
   </div>
 </template>
@@ -187,6 +187,7 @@ export default {
     activeItem: 'story-transfers',
     user: {},
     walletHistory: {},
+    cheque: {},
     loading: false,
     loadHistory: false,
     page: 1,
@@ -232,18 +233,16 @@ export default {
         Toast.fire(this.$store.state.error, '', 'error')
       }
     },
-    sortDate(date) {
-      let time = new Date(date)
-      let hour = time.getHours() <= 9 ? '0' + time.getHours() : time.getHours()
-      let minute = time.getMinutes() <= 9 ? '0' + time.getMinutes() : time.getMinutes()
-      let second = time.getSeconds() <= 9 ? '0' + time.getSeconds() : time.getSeconds()
-      return `${hour}:${minute}:${second}`
-    },
     isActive (menuItem) {
       return this.activeItem === menuItem
     },
     setActive (menuItem) {
       this.activeItem = menuItem
+    },
+    setCheque(item) {
+      this.$store.state.openCheque = true
+      this.cheque = item
+      console.log(item);
     },
     //
     openUser() {
