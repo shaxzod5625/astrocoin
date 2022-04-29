@@ -8,7 +8,7 @@
         <div class="center-content"></div>
         <div class="right-content">
           <div class="user-menu" @click="openUser">
-            <img src="../assets/default-user-pic.png" class="user-pic" alt="">
+            <img :src="require(`../assets/${user.photo || 'default-user-pic.png'}`)" class="user-pic" alt="">
           </div>
         </div>
       </div>
@@ -136,11 +136,11 @@
               <div style="display: flex; justify-content: center;">
                 <bounce-loader :loading="loading" :color="'#5733d1'"></bounce-loader>
               </div>
-              <div class="card" v-for="(history, date) in walletHistory" :key="history.id">
+              <div class="card" v-for="(history, date) in walletHistory" :key="date">
                 <div class="transfers-date">
                   {{ date }}
                 </div>
-                <div v-for="item in history" @click="setCheque(item)" :key="item.id" :class="item.status == 'failed' ? 'failed-coin' : item.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
+                <div v-if="item.type == 'transfer' || item.type == 'system'" v-for="(item, index) in history" @click="setCheque(item)" :key="index" :class="item.status == 'failed' ? 'failed-coin' : item.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
                   <div class="status-icon">
                     <i :class="item.status == 'failed' ? 'ai ai-warning-outline' : item.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
                   </div>
@@ -150,12 +150,39 @@
                   </div>
                 </div>
               </div>
+              <!-- <div class="card" v-for="(history, index) in walletHistory" :key="index">
+                <div class="transfers-date">
+                  {{ history.date }}
+                </div>
+                <div v-for="item in history.data" :key="item.id" @click="setCheque(item)" :class="history.status == 'failed' ? 'failed-coin' : history.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
+                  <div class="status-icon">
+                    <i :class="history.status == 'failed' ? 'ai ai-warning-outline' : history.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
+                  </div>
+                  <div class="status-content">
+                    <div class="status-name">{{ history.title }}</div>
+                    <div class="status-coin">{{ history.amount }} ASC</div>
+                  </div>
+                </div>
+              </div> -->
               <div style="display: flex; justify-content: center;">
                 <bounce-loader :loading="loadHistory" :color="'#5733d1'"></bounce-loader>
               </div>
             </div>
             <div id="story-buy">
-              <div class="icon">Test</div>
+              <div class="card" v-for="(history, date) in walletHistory" :key="date">
+                <div class="transfers-date">
+                  {{ date }}
+                </div>
+                <div v-if="item.type == 'education' || item.type == 'store'" v-for="(item, index) in history" @click="setCheque(item)" :key="index" :class="item.status == 'failed' ? 'failed-coin' : item.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
+                  <div class="status-icon">
+                    <i :class="item.status == 'failed' ? 'ai ai-warning-outline' : item.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
+                  </div>
+                  <div class="status-content">
+                    <div class="status-name">{{ item.title }}</div>
+                    <div class="status-coin">{{ item.amount }} ASC</div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -180,6 +207,9 @@ export default {
     }
     this.user = this.$store.state.user
     this.walletHistory = this.$store.state.walletHistory
+    // if (this.walletHistory.length) {
+    //   this.sort()
+    // }
     this.loading = false
     window.addEventListener('scroll', this.scroll)
   },
@@ -187,6 +217,7 @@ export default {
     activeItem: 'story-transfers',
     user: {},
     walletHistory: {},
+    storeHistory: {},
     cheque: {},
     loading: false,
     loadHistory: false,
@@ -195,6 +226,25 @@ export default {
     delay: 0
   }),
   methods: {
+    // sort() {
+    //   const groups = this.walletHistory.reduce((groups, game) => {
+    //     const date = game.date.split('T')[0];
+    //     if (!groups[date]) {
+    //       groups[date] = [];
+    //     }
+    //     groups[date].push(game);
+    //     return groups;
+    //   }, {});
+
+    //   const groupArrays = Object.keys(groups).map((date) => {
+    //     return {
+    //       date,
+    //       data: groups[date]
+    //     };
+    //   });
+    //   this.walletHistory = groupArrays
+    //   console.log(groupArrays);
+    // },
     async scroll() {
       if (this.delay == 1) return
         this.delay = 1
@@ -242,7 +292,6 @@ export default {
     setCheque(item) {
       this.$store.state.openCheque = true
       this.cheque = item
-      console.log(item);
     },
     //
     openUser() {

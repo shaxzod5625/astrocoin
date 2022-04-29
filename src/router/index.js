@@ -48,13 +48,10 @@ const router = new VueRouter({
   base: process.env.BASE_URL,
   routes
 })
-router.beforeEach((to, from, next) => {
-  if (to.matched.some(record => record.meta.auth)) {
-    if (localStorage.getItem('token')) {
-      next()
-      return
-    }
-    next('/login')
+router.beforeResolve((to, from, next) => {
+  const requiresAuth = to.matched.some(record => record.meta.auth)
+  if (requiresAuth && !localStorage.getItem('token')) {
+    next({ path: '/login' })
   } else {
     next()
   }

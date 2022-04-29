@@ -4,7 +4,7 @@
     <div id="user-menu" :class="{ active: this.$store.state.userModal }">
       <div class="user-person">
         <div class="user-person-pic">
-          <img src="../assets/default-user-pic.png" class="user-pic" alt="">
+          <img :src="require(`../assets/${user.photo || 'default-user-pic.png'}`)" class="user-pic" alt="">
         </div>
         <router-link class="user-info" tag="div" to="/user-page">
           <div class="user-name">{{ user.name }}</div>
@@ -61,7 +61,7 @@
         </div>
         <div class="send-coin">
           <div class="send-label">Сумма</div>
-          <input type="text" v-model="amount">
+          <input type="number" v-model="amount">
         </div>
         <div class="send-comment">
           <div class="send-label">Коментария</div>
@@ -87,24 +87,28 @@
           </div>
         </div>
         <div class="cheque-block">
-          <div class="cheque-title">Сервис</div>
-          <div class="cheque-content">{{ cheque.type }}</div>
+          <div class="cheque-title">Service</div>
+          <div class="cheque-content">{{ capitalizeFirstLetter(cheque.type) }}</div>
         </div>
         <div class="cheque-block">
-          <div class="cheque-title">Дата</div>
+          <div class="cheque-title">Date and time</div>
           <div class="cheque-content">{{ sortDate(cheque.date) }}</div>
         </div>
         <div class="cheque-block">
-          <div class="cheque-title">Данные получателя</div>
-          <div class="cheque-content">{{ getNameSurname(cheque.wallet_to) }}</div>
+          <div class="cheque-title">{{ cheque.wallet_from == user.wallet ? 'Receiver\'s name' : 'Sender\'s name' }}</div>
+          <div class="cheque-content">{{ cheque.fio }}</div>
         </div>
         <div class="cheque-block">
-          <div class="cheque-title">Кошелек получателя</div>
-          <div class="cheque-content">{{ cheque.wallet_to }}</div>
+          <div class="cheque-title">{{ cheque.wallet_from == user.wallet ? 'Receiver\'s wallet' : 'Sender\'s wallet' }}</div>
+          <div class="cheque-content">{{ cheque.wallet_from == user.wallet ? cheque.wallet_to : cheque.wallet_from }}</div>
         </div>
         <div class="cheque-block">
-          <div class="cheque-title">Статус</div>
-          <div class="cheque-content text-success">Успешно</div>
+          <div class="cheque-title">Comment</div>
+          <div class="cheque-content">{{ cheque.comment || 'Empty' }}</div>
+        </div>
+        <div class="cheque-block">
+          <div class="cheque-title">Status</div>
+          <div class="cheque-content text-success">{{ capitalizeFirstLetter(cheque.status) }}</div>
         </div>
       </div>
     </div>
@@ -129,7 +133,35 @@ import { QrcodeStream } from 'vue-qrcode-reader'
 import moment from 'moment'
 export default {
   name: "Modals",
-  props: ['user', 'cheque'],
+  props: {
+    user: {
+      type: Object,
+      default: () => ({
+        wallet: '',
+        fio: '',
+        balance: 0,
+        status: '',
+        status_text: '',
+        status_color: '',
+        status_icon: ''
+      })
+    },
+    cheque: {
+      type: Object,
+      default: () => ({
+        id: '',
+        title: '',
+        type: '',
+        amount: '',
+        date: '',
+        wallet_to: this.user.wallet,
+        comment: '',
+        status: '',
+        status_text: '',
+        status_icon: ''
+      })
+    }
+  },
   components: {
     QrcodeStream
   },
@@ -144,14 +176,13 @@ export default {
     openLogOut: false,
   }),
   methods: {
+    capitalizeFirstLetter(s) {
+      if (s) {
+        return s[0].toUpperCase() + s.slice(1);
+      }
+    },
     sortDate(date) {
       return moment(date).format('DD/MM/YYYY HH:mm')
-    },
-    async getNameSurname(wallet) {
-      await this.$store.dispatch('checkWallet', wallet).then(res => {
-        this.fio = this.$store.state.fio;
-      })
-      return this.fio
     },
     share() {
       if (navigator.hare) {
@@ -211,16 +242,6 @@ export default {
       await this.$store.dispatch('logout')
       this.$router.push('/login')
     },
-    switchCamera () {
-      switch (this.camera) {
-        case 'front':
-          this.camera = 'rear'
-          break
-        case 'rear':
-          this.camera = 'front'
-          break
-      }
-    },
     async onInit(promise) {
       try {
         await promise
@@ -279,6 +300,6 @@ export default {
         this.fio = ''
       }
     },
-  }
+  },
 }
 </script>
