@@ -8,7 +8,6 @@ import VueSweetalert2 from 'vue-sweetalert2'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
 import BounceLoader from 'vue-spinner/src/BounceLoader.vue'
 import qrcodeVue from 'qrcode.vue'
-import VueObserveVisibility from 'vue-observe-visibility'
 import 'sweetalert2/dist/sweetalert2.min.css';
 import './style/style.css'
 import './plugins/Alpha-Icons-v5.5.4/style.css'
@@ -16,7 +15,6 @@ import './plugins/Alpha-Icons-v5.5.4/style.css'
 Vue.config.productionTip = false
 Vue.use(Vuelidate)
 Vue.use(VueSweetalert2)
-Vue.use(VueObserveVisibility)
 Vue.component('qrcode-vue', qrcodeVue)
 Vue.component('bounce-loader', BounceLoader)
 

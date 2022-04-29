@@ -8,7 +8,7 @@
         <div class="center-content"></div>
         <div class="right-content">
           <div class="user-menu" @click="openUser">
-            <img :src="require(`../assets/${user.photo || 'default-user-pic.png'}`)" class="user-pic" alt="">
+            <img :src="this.$store.state.url+user.photo || require(`../assets/default-user-pic.png`)" class="user-pic" alt="">
           </div>
         </div>
       </div>
@@ -140,7 +140,7 @@
                 <div class="transfers-date">
                   {{ date }}
                 </div>
-                <div v-if="item.type == 'transfer' || item.type == 'system'" v-for="(item, index) in history" @click="setCheque(item)" :key="index" :class="item.status == 'failed' ? 'failed-coin' : item.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
+                <div v-for="(item, index) in history" @click="setCheque(item)" :key="index" :class="item.status == 'failed' ? 'failed-coin' : item.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
                   <div class="status-icon">
                     <i :class="item.status == 'failed' ? 'ai ai-warning-outline' : item.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
                   </div>
@@ -169,11 +169,14 @@
               </div>
             </div>
             <div id="story-buy">
-              <div class="card" v-for="(history, date) in walletHistory" :key="date">
+              <div style="display: flex; justify-content: center;">
+                <bounce-loader :loading="loading" :color="'#5733d1'"></bounce-loader>
+              </div>
+              <div class="card" v-for="(history, date) in storeHistory" :key="date">
                 <div class="transfers-date">
                   {{ date }}
                 </div>
-                <div v-if="item.type == 'education' || item.type == 'store'" v-for="(item, index) in history" @click="setCheque(item)" :key="index" :class="item.status == 'failed' ? 'failed-coin' : item.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
+                <div v-for="(item, index) in history" @click="setCheque(item)" :key="index" :class="item.status == 'failed' ? 'failed-coin' : item.wallet_to == user.wallet ? 'receive-coin' : 'remove-coin'">
                   <div class="status-icon">
                     <i :class="item.status == 'failed' ? 'ai ai-warning-outline' : item.wallet_to == user.wallet ? 'ai ai-add' : 'ai ai-remove'"></i>
                   </div>
@@ -182,6 +185,9 @@
                     <div class="status-coin">{{ item.amount }} ASC</div>
                   </div>
                 </div>
+              </div>
+              <div style="display: flex; justify-content: center;">
+                <bounce-loader :loading="loadHistory" :color="'#5733d1'"></bounce-loader>
               </div>
             </div>
           </div>
@@ -205,11 +211,12 @@ export default {
     if (!this.$store.state.walletHistory) {
       await this.$store.dispatch('getHistory')
     }
+    if (!this.$store.state.orderHistory) {
+      await this.$store.dispatch('getOrders')
+    }
     this.user = this.$store.state.user
     this.walletHistory = this.$store.state.walletHistory
-    // if (this.walletHistory.length) {
-    //   this.sort()
-    // }
+    this.storeHistory = this.$store.state.orderHistory
     this.loading = false
     window.addEventListener('scroll', this.scroll)
   },
@@ -295,13 +302,7 @@ export default {
     },
     //
     openUser() {
-      // console.log(document.querySelector('#user-menu').classList[0] == 'active')
       this.$store.state.userModal = !this.$store.state.userModal
-      if (document.querySelector('#user-menu').classList[0] == 'active') {
-        document.querySelector('#user-menu').style.background = ''
-      }
-      // let a = document.getElementById('user-menu')
-      // console.log(a.classList[0] == 'active')
     },
     submitModal() {
       this.$store.state.receiveModal = !this.$store.state.receiveModal

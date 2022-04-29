@@ -2,18 +2,20 @@ import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
 // const URL = "http://127.0.0.1:8000/api";
-const URL = 'http://astrum.uubek.com/api';
+const URL = 'https://astrum.uubek.com/api';
 Vue.use(Vuex);
 
 
 export default new Vuex.Store({
   state: {
+    url: 'https://astrum.uubek.com',
     errors: null,
     error: null,
     token: null,
     user: null,
     stacks: null,
     walletHistory: null,
+    orderHistory: null,
     receiveModal: false,
     sendModal: false,
     userModal: false,
@@ -40,6 +42,9 @@ export default new Vuex.Store({
     },
     setWalletHistory(state, history) {
       state.walletHistory = history;
+    },
+    setOrderHistory(state, history) {
+      state.orderHistory = history;
     },
     setStack(state, stacks) {
       state.stacks = stacks
@@ -189,23 +194,24 @@ export default new Vuex.Store({
         throw e;
       }
     },
-    async setPhoto({ commit }, data) {
+    async getOrders({ commit }) {
       try {
-        const res = await axios.post(`${URL}/user/photo`, data, {
+        const res = await axios.get(`${URL}/orders`, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
         }).catch(e => {
           commit('error', e.response.data)
         })
+        commit('setOrderHistory', res.data)
       } catch (e) {
-        console.log(e)
+        console.log(e);
         throw e;
       }
     },
-    async getPhoto({ commit }) {
+    async setPhoto({ commit }, data) {
       try {
-        const res = await axios.get(`${URL}/user/photo`, {
+        await axios.post(`${URL}/user/photo`, { photo: data }, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

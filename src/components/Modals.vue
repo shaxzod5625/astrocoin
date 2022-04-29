@@ -1,10 +1,10 @@
 <template>
   <div id="modals" class="modal">
-    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.confirmLogout || this.$store.state.openCheque}"></div>
+    <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.confirmLogout || this.$store.state.openCheque || this.openLogOut }"></div>
     <div id="user-menu" :class="{ active: this.$store.state.userModal }">
       <div class="user-person">
         <div class="user-person-pic">
-          <img :src="require(`../assets/${user.photo || 'default-user-pic.png'}`)" class="user-pic" alt="">
+          <img :src="this.$store.state.url+user.photo || require(`../assets/default-user-pic.png`)" class="user-pic" alt="">
         </div>
         <router-link class="user-info" tag="div" to="/user-page">
           <div class="user-name">{{ user.name }}</div>
@@ -112,7 +112,7 @@
         </div>
       </div>
     </div>
-    <div id="log-out" :class="openLogOut ? 'active' : ''">
+    <div id="log-out" :class="{ active: openLogOut }">
       <div class="modal-content">
         <div class="modal-header">
           <div class="modal-title">Выйти</div>
