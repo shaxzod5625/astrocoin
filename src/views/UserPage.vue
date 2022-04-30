@@ -6,9 +6,10 @@
         <div class="close-title">Back</div>
       </router-link>
       <div class="user-photo">
-        <img src="../assets/default-user-pic.png" alt="" class="user-pic">
+        <img :src="require(`../assets/${user.photo || 'default-user-pic.png'}`)" alt="" class="user-pic">
         <div class="edit-user-pic">
           <i class="ai ai-camera-outline"></i>
+          <input type="file">
         </div>
       </div>
       <div class="user-fullname">{{ user.name }} {{ user.last_name }}</div>

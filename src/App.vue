@@ -10,6 +10,6 @@ export default {
     if (!this.$store.state.user) {
       this.$router.push('/login')
     }
-  }
+  },
 }
 </script>
