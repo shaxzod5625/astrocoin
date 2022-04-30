@@ -49,8 +49,17 @@
     display: flex;
     justify-content: center;
     flex-direction: row;
+    width: 250px;
     height: 250px;
     position: relative;
+}
+
+#user-app .user-pic-block {
+    display: flex;
+    align-items: center;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 0 0 5px #fff;
 }
 
 #user-app .user-photo .edit-user-pic {

@@ -6,7 +6,9 @@
         <div class="close-title">Back</div>
       </router-link>
       <div class="user-photo">
-        <img :src="user.photo ? this.$store.state.url + user.photo : require(`../assets/default-user-pic.png`)" alt="" class="user-pic">
+        <div class="user-pic-block">
+          <img :src="user.photo ? this.$store.state.url + user.photo : require(`../assets/default-user-pic.png`)" alt="" class="user-pic">
+        </div>
         <input 
           type="file"
           @change="onFileChange"
@@ -28,7 +30,7 @@
         </ul>
       </div>
     </div>
-    <div>
+    <div class="">
       <Cropper
         ref="cropper"
         :src="image"
