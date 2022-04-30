@@ -6,7 +6,7 @@
         <div class="close-title">Back</div>
       </router-link>
       <div class="user-photo">
-        <img :src="this.$store.state.url+user.photo || require(`../assets/default-user-pic.png`)" alt="" class="user-pic">
+        <img :src="user.photo ? this.$store.state.url + user.photo : require(`../assets/default-user-pic.png`)" alt="" class="user-pic">
         <input 
           type="file"
           @change="onFileChange"
@@ -24,50 +24,32 @@
           <li><i class="ai ai-person-outline"></i>{{ user.qwasar }}</li>
           <li><i class="ai ai-school-outline"></i>{{ user.stack }}</li>
           <li><i class="ai ai-wallet-outline"></i>{{ user.wallet }}</li>
-          <router-link tag="li" to="/repass"><i class="ai ai-key-outline"></i> Изменить пароль</router-link>
+          <router-link tag="li" to="/repass"><i class="ai ai-key-outline"></i>Изменить пароль</router-link>
         </ul>
       </div>
     </div>
-    <div class="modal">
-      <div class="modal-back" @click="closeModals" :class="{ active: modalActive }"></div>
-      <div class="modal-header">
-        <div class="modal-title">Отправить</div>
-        <div class="modal-tools">
-          <div class="modal-close" @click="closeModals">
-            <i class="ai ai-close"></i>
-          </div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <cropper
-          v-if="selectedFile"
-          class="cropper"
-          :src="selectedFile"
-          stencil-component="circle-stencil"
-          :stencil-props="{
-            aspectRatio: 10/12
-          }"
-          @change="change"
-        />
-      </div>
+    <div>
+      <Cropper
+        ref="cropper"
+        :src="image"
+        stencil-component="circle-stencil"
+      />
+      <button @click="reset">Reset</button>
+      <button @click="uploadImage">Upload</button>
     </div>
   </div>
 </template>
-
 <script>
-import { Cropper, CircleStencil } from 'vue-advanced-cropper'
-import 'vue-advanced-cropper/dist/style.css';
-
+import { Cropper } from "vue-advanced-cropper";
+import "vue-advanced-cropper/dist/style.css";
 export default {
   name: "UserPage",
   data: () => ({
     user: {},
-    selectedFile: null,
-    modalActive: false
+    image: null,
   }),
   components: {
-    CircleStencil,
-    Cropper
+    Cropper,
   },
   async mounted() {
     if (!this.$store.state.user) {
@@ -76,44 +58,33 @@ export default {
     this.user = this.$store.state.user
   },
   methods: {
-    closeModals() {
-      this.modalActive = false
-    },
-    change({ coordinates, canvas }) {
-      console.log(coordinates, canvas)
+    reset() {
+      this.$refs.cropper.reset();
+      this.image = null;
     },
     onFileChange(e) {
       const file = e.target.files[0]
-      this.selectedFile = URL.createObjectURL(file)
-      this.modalActive = true
+      this.image = URL.createObjectURL(file)
     },
-    onUpload() {
-      const fd = new FormData()
-      fd.append('image', this.selectedFile, this.selectedFile.name)
-    }
+    uploadImage() {
+			const { canvas } = this.$refs.cropper.getResult();
+			if (canvas) {
+				const form = new FormData();
+				canvas.toBlob(blob => {
+					form.append('file', blob);
+					// You can use axios, superagent and other libraries instead here
+					fetch('https://astrum.uubek.com/api/user/photo', {
+						method: 'POST',
+						body: {
+              photo: form
+            },
+					});
+					// Perhaps you should add the setting appropriate file format here
+				}, 'image/jpeg');
+			}
+		},
   }
 }
 </script>
 <style scoped>
-.cropper {
-  height: 600px;
-  background: #DDD;
-}
-#user-app .modal {
-  display: flex;
-  justify-content: center;
-  padding: 10px;
-  position: absolute;
-  width: 55vw;
-}
-#user-app .modal-back.active {
-  background: rgba(0,0,0,.25);
-  position: fixed;
-  top: 0;
-  right: 0;
-  left: 0;
-  bottom: 0;
-  z-index: 5;
-}
-
 </style>

@@ -8,7 +8,7 @@
         <div class="center-content"></div>
         <div class="right-content">
           <div class="user-menu" @click="openUser">
-            <img :src="this.$store.state.url+user.photo || require(`../assets/default-user-pic.png`)" class="user-pic" alt="">
+            <img :src="user.photo ? this.$store.state.url + user.photo : require(`../assets/default-user-pic.png`)" class="user-pic" alt="">
           </div>
         </div>
       </div>
@@ -201,7 +201,7 @@
 import Modals from '../components/Modals.vue'
 import axios from 'axios'
 export default {
-  name: 'HomeView',
+  name: 'Home',
   components: { Modals },
   async mounted() {
     this.loading = true

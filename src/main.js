@@ -1,8 +1,6 @@
 import Vue from 'vue'
 import App from './App.vue'
 import './registerServiceWorker'
-import router from './router'
-import store from './store'
 import Vuelidate from 'vuelidate'
 import VueSweetalert2 from 'vue-sweetalert2'
 import Swal from 'sweetalert2/dist/sweetalert2.js'
@@ -11,6 +9,8 @@ import qrcodeVue from 'qrcode.vue'
 import 'sweetalert2/dist/sweetalert2.min.css';
 import './style/style.css'
 import './plugins/Alpha-Icons-v5.5.4/style.css'
+import router from './router'
+import store from './store'
 
 Vue.config.productionTip = false
 Vue.use(Vuelidate)

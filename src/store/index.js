@@ -72,7 +72,9 @@ export default new Vuex.Store({
         const res = await axios.post(`${URL}/login`, user).catch(e => {
           commit("error", e.response.data);
         })
-        commit("setToken", res.data);
+        if (res) {
+          commit("setToken", res.data);
+        }
       } catch (e) {
         console.log(e);
         throw e;
@@ -98,7 +100,9 @@ export default new Vuex.Store({
         const res = await axios.post(`${URL}/register`, user).catch(err => {
           commit('error', err.response.data)
         })
-        commit("setToken", res.data);
+        if (res) {
+          commit("setToken", res.data);
+        }
       } catch (e) {
         console.log(e);
         throw e;
@@ -109,7 +113,9 @@ export default new Vuex.Store({
         const res = await axios.get(`${URL}/stacks`).catch(err => {
           commit('error', err.response.data)
         })
-        commit("setStack", res.data);
+        if (res) {
+          commit("setStack", res.data);
+        }
       } catch (e) {
         console.log(e);
         throw e;
@@ -124,7 +130,9 @@ export default new Vuex.Store({
         }).catch(e => {
           commit('error', e.response.data)
         })
-        commit('setCheckWallet', res.data)
+        if (res) {
+          commit('setCheckWallet', res.data)
+        }
       } catch (e) {
         console.log(e);
         throw e;
@@ -188,7 +196,9 @@ export default new Vuex.Store({
         }).catch(e => {
           commit('error', e.response.data)
         })
-        commit('setWalletHistory', res.data)
+        if (res) {
+          commit('setWalletHistory', res.data)
+        }
       } catch (e) {
         console.log(e);
         throw e;
@@ -203,7 +213,9 @@ export default new Vuex.Store({
         }).catch(e => {
           commit('error', e.response.data)
         })
-        commit('setOrderHistory', res.data)
+        if (res) {
+          commit('setOrderHistory', res.data)
+        }
       } catch (e) {
         console.log(e);
         throw e;
@@ -232,7 +244,9 @@ export default new Vuex.Store({
         }).catch(e => {
           commit('error', e.response.data)
         })
-        commit('setUser', res.data)
+        if (res) {
+          commit('setUser', res.data)
+        }
       } catch (e) {
         console.log(e)
         throw e

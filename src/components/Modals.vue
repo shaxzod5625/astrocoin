@@ -1,10 +1,10 @@
 <template>
   <div id="modals" class="modal">
     <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.confirmLogout || this.$store.state.openCheque || this.openLogOut }"></div>
-    <div id="user-menu" :class="{ active: this.$store.state.userModal }">
+    <div id="user-menu" v-if="this.$store.state.userModal" :class="{ active: this.$store.state.userModal }">
       <div class="user-person">
         <div class="user-person-pic">
-          <img :src="this.$store.state.url+user.photo || require(`../assets/default-user-pic.png`)" class="user-pic" alt="">
+          <img :src="user.photo ? this.$store.state.url + user.photo : require(`../assets/default-user-pic.png`)" class="user-pic" alt="">
         </div>
         <router-link class="user-info" tag="div" to="/user-page">
           <div class="user-name">{{ user.name }}</div>
@@ -16,7 +16,7 @@
         <li class="menu-item"><a @click.prevent="openConfirm" href="#" class="log-out-btn">Выйти</a></li>
       </ul>
     </div>
-    <div id="receive-coin" :class="{ active: this.$store.state.receiveModal }">
+    <div id="receive-coin" v-if="this.$store.state.receiveModal" :class="{ active: this.$store.state.receiveModal }">
       <div class="modal-header">
         <div class="modal-title">Получить</div>
         <div class="modal-tools">
@@ -39,7 +39,7 @@
         </div>
       </div>
     </div>
-    <div id="send-coin" :class="{ active: this.$store.state.sendModal }">
+    <div id="send-coin" v-if="this.$store.state.sendModal" :class="{ active: this.$store.state.sendModal }">
       <div class="modal-header">
         <div class="modal-title">Отправить</div>
         <div class="modal-tools">
@@ -72,7 +72,7 @@
         </div>
       </div>
     </div>
-    <div id="cheque-coin" :class="{ active: this.$store.state.openCheque }">
+    <div id="cheque-coin" v-if="this.$store.state.openCheque" :class="{ active: this.$store.state.openCheque }">
       <div class="top-brand">
         <div class="corp-logo"></div>
       </div>
@@ -112,7 +112,7 @@
         </div>
       </div>
     </div>
-    <div id="log-out" :class="{ active: openLogOut }">
+    <div id="log-out" v-if="openLogOut" :class="{ active: openLogOut }">
       <div class="modal-content">
         <div class="modal-header">
           <div class="modal-title">Выйти</div>
@@ -126,44 +126,21 @@
         <div class="btn log-out-verify" @click="logout">Выйти</div>
       </div>
     </div>
+
   </div>
 </template>
 <script>
+import { Cropper, CircleStencil } from 'vue-advanced-cropper'
+import 'vue-advanced-cropper/dist/style.css';
 import { QrcodeStream } from 'vue-qrcode-reader'
 import moment from 'moment'
 export default {
   name: "Modals",
-  props: {
-    user: {
-      type: Object,
-      default: () => ({
-        wallet: '',
-        fio: '',
-        balance: 0,
-        status: '',
-        status_text: '',
-        status_color: '',
-        status_icon: ''
-      })
-    },
-    cheque: {
-      type: Object,
-      default: () => ({
-        id: '',
-        title: '',
-        type: '',
-        amount: '',
-        date: '',
-        wallet_to: this.user.wallet,
-        comment: '',
-        status: '',
-        status_text: '',
-        status_icon: ''
-      })
-    }
-  },
+  props: ['user', 'cheque'],
   components: {
-    QrcodeStream
+    QrcodeStream,
+    CircleStencil,
+    Cropper
   },
   data: () => ({
     wallet_to: '',
@@ -300,6 +277,9 @@ export default {
         this.fio = ''
       }
     },
+    '$route'() {
+
+    }
   },
 }
 </script>
