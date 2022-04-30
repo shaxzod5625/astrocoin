@@ -6,7 +6,9 @@
         <div class="close-title">Back</div>
       </router-link>
       <div class="user-photo">
-        <img :src="this.$store.state.url+user.photo || require(`../assets/default-user-pic.png`)" alt="" class="user-pic">
+        <div class="user-pic-block">
+          <img :src="this.$store.state.url+user.photo || require(`../assets/default-user-pic.png`)" alt="" class="user-pic">
+        </div>
         <input 
           type="file"
           @change="onFileChange"
@@ -26,29 +28,6 @@
           <li><i class="ai ai-wallet-outline"></i>{{ user.wallet }}</li>
           <router-link tag="li" to="/repass"><i class="ai ai-key-outline"></i> Изменить пароль</router-link>
         </ul>
-      </div>
-    </div>
-    <div class="modal">
-      <div class="modal-back" @click="closeModals" :class="{ active: modalActive }"></div>
-      <div class="modal-header">
-        <div class="modal-title">Отправить</div>
-        <div class="modal-tools">
-          <div class="modal-close" @click="closeModals">
-            <i class="ai ai-close"></i>
-          </div>
-        </div>
-      </div>
-      <div class="modal-body">
-        <cropper
-          v-if="selectedFile"
-          class="cropper"
-          :src="selectedFile"
-          stencil-component="circle-stencil"
-          :stencil-props="{
-            aspectRatio: 10/12
-          }"
-          @change="change"
-        />
       </div>
     </div>
   </div>

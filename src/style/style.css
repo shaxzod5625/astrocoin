@@ -79,6 +79,10 @@
 }
 
 .user-menu {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    overflow: hidden;
     width: 42px;
     height: 42px;
     background: #fff;
@@ -92,9 +96,7 @@
 }
 
 .user-pic {
-    border-radius: 50%;
     width: 100%;
-    height: 100%;
 }
 
 #main {
@@ -212,6 +214,10 @@
     margin: 0 5px;
     color: #bababa;
     border-radius: 10px;
+}
+
+.main-tools .story-btn:focus-visible {
+    background: none;
 }
 
 .main-tools .story-btn:hover {
@@ -369,6 +375,10 @@
 }
 
 #user-menu .user-person-pic {
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     width: 50px;
     height: 50px;
     background: #fff;
@@ -778,11 +788,17 @@
     #cheque-coin {
         width: 30vw;
     }
+    .main-tools .story-btn:hover {
+        background: transparent !important;
+    }
 }
 
 @media screen and (max-width: 1000px) {
     #cheque-coin {
         width: auto;
+    }
+    .main-tools .story-btn:hover {
+        background: transparent !important;
     }
 }
 
@@ -790,10 +806,16 @@
     #header, #main, #modals {
         width: 85vw;
     }
+    .main-tools .story-btn:hover {
+        background: transparent !important;
+    }
 }
 
 @media screen and (max-width: 600px) {
     #header, #main, #modals {
         width: 95vw;
+    }
+    .main-tools .story-btn:hover {
+        background: transparent !important;
     }
 }

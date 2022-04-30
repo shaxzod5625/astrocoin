@@ -113,15 +113,17 @@
 }
 
 @media screen and (max-width: 518px) {
-  body {
-      background: #fff;
-  }
-  .app-logo {
-      transform: scale(1.2);
+  .app-logo:not(.main) {
+    transform: scale(1.2);
   }
   #container #signup-page {
-      box-shadow: none;
-      transform: scale(0.8);
-      margin-top: -10%;
+    background: #f4f4f4;
+    box-shadow: none;
+    transform: scale(0.8);
+    margin-top: -10%;
+  }
+  #signup-page .form-control input:not([type="submit"]),
+  #signup-page .form-control select {
+    background: #fff;
   }
 }
