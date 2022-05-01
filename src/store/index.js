@@ -223,7 +223,7 @@ export default new Vuex.Store({
     },
     async setPhoto({ commit }, data) {
       try {
-        await axios.post(`${URL}/user/photo`, { photo: data }, {
+        await axios.post(`${URL}/user/photo`, data, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },

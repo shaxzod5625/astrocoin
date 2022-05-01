@@ -95,28 +95,37 @@
 
 
 #user-app .user-tools {
-    background: #ffffff;
     margin-top: 25px;
     width: 100%;
-    border-radius: 10px;
-    overflow: hidden;
-    box-shadow: 0 0 10px #e4e4e4;
 }
 
 #user-app .user-tools .tools-items {
     margin: 0;
     padding: 0;
     list-style: none;
+    background: #ffffff;
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 0 10px #e4e4e4;
+}
+
+#user-app .user-tools .tools-items + .tools-items {
+    margin-top: 20px;
 }
 
 #user-app .user-tools .tools-items li + li {
     border-top: 1px solid #e0e0e0;
 }
+
 #user-app .user-tools .tools-items li {
     display: flex;
     align-items: center;
     padding: 10px 15px;
     cursor: pointer;
+}
+
+#user-app .user-tools .tools-items li:hover {
+    background: #f4f4f4;
 }
 
 #user-app .user-tools .tools-items li i {

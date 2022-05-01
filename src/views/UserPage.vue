@@ -26,18 +26,38 @@
           <li><i class="ai ai-person-outline"></i>{{ user.qwasar }}</li>
           <li><i class="ai ai-school-outline"></i>{{ user.stack }}</li>
           <li><i class="ai ai-wallet-outline"></i>{{ user.wallet }}</li>
-          <router-link tag="li" to="/update-password"><i class="ai ai-key-outline"></i>Изменить пароль</router-link>
+        </ul>
+        <ul class="tools-items">
+          <router-link tag="li" to="/update-password"><i class="ai ai-key-outline"></i>Change password</router-link>
+        </ul>
+        <ul class="tools-items">
+          <li @click="logout"><i class="ai ai-key-outline"></i>Log Out</li>
         </ul>
       </div>
     </div>
-    <div class="">
-      <Cropper
-        ref="cropper"
-        :src="image"
-        stencil-component="circle-stencil"
-      />
-      <button @click="reset">Reset</button>
-      <button @click="uploadImage">Upload</button>
+    <img v-if="croppedImage" :src="croppedImage" alt="">
+    <div id="modals" class="modals">
+      <div id="upload-avatar" :class="{ active: openUpload }">
+        <div class="modal-header">
+          <div class="modal-title">Upload</div>
+          <div class="modal-tools">
+            <div class="modal-close" @click="closeModals">
+              <i class="ai ai-close"></i>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <Cropper
+              ref="cropper"
+              :src="image"
+              stencil-component="circle-stencil"
+          />
+        </div>
+        <div class="upload-tools">
+          <button @click="reset">Reset</button>
+          <button @click="uploadImage">Upload</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -49,6 +69,8 @@ export default {
   data: () => ({
     user: {},
     image: null,
+    openUpload: false,
+    croppedImage: null,
   }),
   components: {
     Cropper,
@@ -60,39 +82,96 @@ export default {
     this.user = this.$store.state.user
   },
   methods: {
+    closeModals() {
+      this.openUpload = false
+    },
+    async logout() {
+      await this.$store.dispatch('logout')
+      this.$router.push('/login')
+    },
     reset() {
       this.$refs.cropper.reset();
       this.image = null;
+      this.openUpload = false
     },
     onFileChange(e) {
       const file = e.target.files[0]
       this.image = URL.createObjectURL(file)
+      this.openUpload = true
     },
-    uploadImage() {
-			// const result = this.$refs.cropper.getResult();
-      // console.log(result.canvas.toDataURL());
-			// const form = new FormData();
-			// form.append('file', form);
+    async uploadImage() {
       const { canvas } = this.$refs.cropper.getResult();
 			if (canvas) {
 				const form = new FormData();
 				canvas.toBlob(blob => {
-					form.append('file', blob);
+          console.log(blob);
+					form.append('photo', blob);
 					// You can use axios, superagent and other libraries instead here
-					fetch('https://astrum.uubek.com/api/user/photo', {
-            headers: {
-              'Content-Type': 'multipart/form-data',
-              'Authorization': `Bearer ${localStorage.getItem('token')}`
-            },
-						method: 'POST',
-						body: form,
-					});
+					// fetch('https://astrum.uubek.com/api/user/photo', {
+					// 	method: 'POST',
+          //   headers: {
+          //     'Authorization': `Bearer ${localStorage.getItem('token')}`
+          //   },
+					// 	body: form,
+					// });
+          this.$store.dispatch('setPhoto', form)
 					// Perhaps you should add the setting appropriate file format here
 				}, 'image/jpeg');
 			}
+      this.openUpload = false
+      Toast.fire('Success', 'Photo uploaded', 'success')
 		},
   }
 }
 </script>
 <style scoped>
+
+#upload-avatar {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 12px;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  transform: scale(0.9);
+  box-shadow: 0 0 15px #c2c2c2;
+  position: fixed;
+  top: 155px;
+  z-index: 8;
+}
+
+#upload-avatar.active {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+#upload-avatar .vue-advanced-cropper {
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+#upload-avatar .upload-tools {
+  display: flex;
+  justify-content: center;
+}
+
+#upload-avatar .upload-tools button {
+  border: none;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#upload-avatar .upload-tools button:hover {
+  background: #5733d1;
+  color: #fff;
+}
+
 </style>
