@@ -39,6 +39,12 @@ const routes = [
     name: 'UserPage',
     component: () => import('../views/UserPage'),
     meta: { auth: true }
+  },
+  {
+    path: '/update-password',
+    name: 'UpdatePassword',
+    component: () => import('../views/UpdatePassword'),
+    meta: { auth: true }
   }
 ]
 

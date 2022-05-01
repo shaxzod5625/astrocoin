@@ -26,7 +26,7 @@
           <li><i class="ai ai-person-outline"></i>{{ user.qwasar }}</li>
           <li><i class="ai ai-school-outline"></i>{{ user.stack }}</li>
           <li><i class="ai ai-wallet-outline"></i>{{ user.wallet }}</li>
-          <router-link tag="li" to="/repass"><i class="ai ai-key-outline"></i>Изменить пароль</router-link>
+          <router-link tag="li" to="/update-password"><i class="ai ai-key-outline"></i>Изменить пароль</router-link>
         </ul>
       </div>
     </div>
@@ -69,17 +69,23 @@ export default {
       this.image = URL.createObjectURL(file)
     },
     uploadImage() {
-			const { canvas } = this.$refs.cropper.getResult();
+			// const result = this.$refs.cropper.getResult();
+      // console.log(result.canvas.toDataURL());
+			// const form = new FormData();
+			// form.append('file', form);
+      const { canvas } = this.$refs.cropper.getResult();
 			if (canvas) {
 				const form = new FormData();
 				canvas.toBlob(blob => {
 					form.append('file', blob);
 					// You can use axios, superagent and other libraries instead here
 					fetch('https://astrum.uubek.com/api/user/photo', {
-						method: 'POST',
-						body: {
-              photo: form
+            headers: {
+              'Content-Type': 'multipart/form-data',
+              'Authorization': `Bearer ${localStorage.getItem('token')}`
             },
+						method: 'POST',
+						body: form,
 					});
 					// Perhaps you should add the setting appropriate file format here
 				}, 'image/jpeg');
