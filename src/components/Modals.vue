@@ -13,12 +13,12 @@
       </div>
       <div class="hr"></div>
       <ul class="other-user-menu">
-        <li class="menu-item"><a @click.prevent="openConfirm" href="#" class="log-out-btn">Выйти</a></li>
+        <li class="menu-item"><a @click.prevent="openConfirm" href="#" class="log-out-btn">Log Out</a></li>
       </ul>
     </div>
     <div id="receive-coin" v-if="this.$store.state.receiveModal" :class="{ active: this.$store.state.receiveModal }">
       <div class="modal-header">
-        <div class="modal-title">Получить</div>
+        <div class="modal-title">Receive</div>
         <div class="modal-tools">
           <div class="modal-close" @click="closeModals">
             <i class="ai ai-close"></i>
@@ -35,13 +35,13 @@
           <i class="ai ai-copy-outline" @click="copy(user.wallet)"></i>
         </div>
         <div class="receive-share">
-          <button class="share-btn" @click="share"><i class="ai ai-share-outline"></i> Поделиться</button>
+          <button class="share-btn" @click="share"><i class="ai ai-share-outline"></i> Share</button>
         </div>
       </div>
     </div>
     <div id="send-coin" v-if="this.$store.state.sendModal" :class="{ active: this.$store.state.sendModal }">
       <div class="modal-header">
-        <div class="modal-title">Отправить</div>
+        <div class="modal-title">Send</div>
         <div class="modal-tools">
           <div class="modal-close" @click="closeModals">
             <i class="ai ai-close"></i>
@@ -57,18 +57,18 @@
         </div>
         <div v-if="scanOpen" class="qr-view">
           <qrcode-stream @decode="onDecode" :track="paintOutline" @init="onInit"/>
-          <button class="close-modal" @click="scanOpen = false">Отменить</button>
+          <button class="close-modal" @click="scanOpen = false">Cancel</button>
         </div>
         <div class="send-coin">
-          <div class="send-label">Сумма</div>
+          <div class="send-label">Amount</div>
           <input type="number" v-model="amount">
         </div>
         <div class="send-comment">
-          <div class="send-label">Коментария</div>
+          <div class="send-label">Comment</div>
           <textarea type="text" v-model="comment"></textarea>
         </div>
         <div class="receive-share">
-          <button class="share-btn" @click="sendCoin">Отправить <i class="ai ai-send-outline"></i></button>
+          <button class="share-btn" @click="sendCoin">Send <i class="ai ai-send-outline"></i></button>
         </div>
       </div>
     </div>
@@ -115,15 +115,15 @@
     <div id="log-out" v-if="openLogOut" :class="{ active: openLogOut }">
       <div class="modal-content">
         <div class="modal-header">
-          <div class="modal-title">Выйти</div>
+          <div class="modal-title">Log Out</div>
         </div>
         <div class="modal-body">
-          <div class="log-out-query">Вы хотите выйти аккаунта и завершить сеанс?</div>
+          <div class="log-out-query">Do you want to log out of the account and end the session?</div>
         </div>
       </div>
       <div class="modal-tools">
-        <div class="btn modal-close" @click="closeModals">Отменить</div>
-        <div class="btn log-out-verify" @click="logout">Выйти</div>
+        <div class="btn modal-close" @click="closeModals">Cancel</div>
+        <div class="btn log-out-verify" @click="logout">Log Out</div>
       </div>
     </div>
 

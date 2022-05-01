@@ -26,18 +26,37 @@
           <li><i class="ai ai-person-outline"></i>{{ user.qwasar }}</li>
           <li><i class="ai ai-school-outline"></i>{{ user.stack }}</li>
           <li><i class="ai ai-wallet-outline"></i>{{ user.wallet }}</li>
-          <router-link tag="li" to="/repass"><i class="ai ai-key-outline"></i>Изменить пароль</router-link>
+        </ul>
+        <ul class="tools-items">
+          <router-link tag="li" to="/repass"><i class="ai ai-key-outline"></i>Change password</router-link>
+        </ul>
+        <ul class="tools-items">
+          <li><i class="ai ai-key-outline"></i>Log Out</li>
         </ul>
       </div>
     </div>
-    <div class="">
-      <Cropper
-        ref="cropper"
-        :src="image"
-        stencil-component="circle-stencil"
-      />
-      <button @click="reset">Reset</button>
-      <button @click="uploadImage">Upload</button>
+    <div id="modals" class="modals">
+      <div id="upload-avatar">
+        <div class="modal-header">
+          <div class="modal-title">Upload</div>
+          <div class="modal-tools">
+            <div class="modal-close" @click="closeModals">
+              <i class="ai ai-close"></i>
+            </div>
+          </div>
+        </div>
+        <div class="modal-body">
+          <Cropper
+              ref="cropper"
+              :src="image"
+              stencil-component="circle-stencil"
+          />
+        </div>
+        <div class="upload-tools">
+          <button @click="reset">Reset</button>
+          <button @click="uploadImage">Upload</button>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -89,4 +108,53 @@ export default {
 }
 </script>
 <style scoped>
+
+#upload-avatar {
+  background-color: rgba(255, 255, 255, 0.7);
+  backdrop-filter: blur(10px);
+  padding: 20px;
+  border-radius: 12px;
+  visibility: hidden;
+  opacity: 0;
+  overflow: hidden;
+  transform: scale(0.9);
+  box-shadow: 0 0 15px #c2c2c2;
+  position: absolute;
+  top: 155px;
+  z-index: 8;
+}
+
+#upload-avatar.active {
+  visibility: visible;
+  opacity: 1;
+  transform: scale(1.1);
+}
+
+#upload-avatar .vue-advanced-cropper {
+  width: 350px;
+  height: 350px;
+  overflow: hidden;
+  border-radius: 10px;
+}
+
+#upload-avatar .upload-tools {
+  display: flex;
+  justify-content: center;
+}
+
+#upload-avatar .upload-tools button {
+  border: none;
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  margin: 5px;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+#upload-avatar .upload-tools button:hover {
+  background: #5733d1;
+  color: #fff;
+}
+
 </style>
