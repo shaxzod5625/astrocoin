@@ -34,6 +34,10 @@ body {
     color: #FFFF00;
 }
 
+.btn-log-out i {
+    background: #d03232 !important;
+}
+
 .font-default,
 .coin-currency,
 .user-info,

@@ -128,8 +128,8 @@
         </div>
         <div class="coin-body">
           <div class="main-tools" :class="{'left': activeItem == 'story-transfers', 'right': activeItem == 'story-buy'}">
-            <div class="story-transfers story-btn" @click="setActive('story-transfers')" :class="{ active: isActive('story-transfers') }">Транзакции</div>
-            <div class="story-buy story-btn" @click="setActive('story-buy')" :class="{ active: isActive('story-buy') }">Покупки</div>
+            <div class="story-transfers story-btn" @click="setActive('story-transfers')" :class="{ active: isActive('story-transfers') }">Transactions</div>
+            <div class="story-buy story-btn" @click="setActive('story-buy')" :class="{ active: isActive('story-buy') }">Orders</div>
           </div>
           <div class="story" :class="{'transfer': activeItem == 'story-transfers', 'buy': activeItem == 'story-buy'}">
             <div id="story-transfers">
