@@ -110,7 +110,7 @@
           <div class="cheque-title">Status</div>
           <div 
             class="cheque-content" 
-            :class="cheque.status == 'success' ? 'text-success' : cheque.status == 'failure' ? 'text-failed' : 'text-error'"
+            :class="cheque.status == 'success' ? 'text-success' : cheque.status == 'failed' ? 'text-failed' : 'text-error'"
           >
             {{ capitalizeFirstLetter(cheque.status) }}
           </div>
