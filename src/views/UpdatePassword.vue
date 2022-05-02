@@ -77,9 +77,7 @@ export default {
           old_password: this.oldPassword,
         })
         Toast.fire('Пароль успешно изменен', '', 'success')
-        setTimeout(() => {
-          this.$router.push('/user-page')
-        }, 1000)
+        this.$router.push('/user-page')
       } catch (e) {
         if (this.$store.state.errors) {
           for (const key in this.$store.state.errors) {

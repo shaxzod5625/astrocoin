@@ -126,7 +126,6 @@
         <div class="btn log-out-verify" @click="logout">Log Out</div>
       </div>
     </div>
-
   </div>
 </template>
 <script>
@@ -177,15 +176,17 @@ export default {
       }
     },
     sendCoin() {
-      this.$emit('sendCoin', {
-        wallet_to: this.wallet_to,
-        amount: this.amount,
-        comment: this.comment
-      })
-      this.amount = null
-      this.comment = ''
-      this.scanResult = ''
-      this.closeModals()
+      if (this.amount && this.amount > 0 && this.wallet_to) {
+        this.$emit('sendCoin', {
+          wallet_to: this.wallet_to,
+          amount: this.amount,
+          comment: this.comment
+        })
+        this.amount = null
+        this.comment = ''
+        this.scanResult = ''
+        this.closeModals()
+      }
     },
     closeModals() {
       this.openLogOut = false

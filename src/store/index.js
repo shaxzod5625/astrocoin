@@ -161,7 +161,6 @@ export default new Vuex.Store({
         }).catch(e => {
           commit('error', e.response.data)
         })
-        commit()
       } catch (e) {
         console.log(e);
         throw e
@@ -170,16 +169,6 @@ export default new Vuex.Store({
     async resetPassword({ commit }, email) {
       try {
         await axios.post(`${URL}/reset-password`, email).catch(e => {
-          commit('error', e.response.data)
-        })
-      } catch (e) {
-        console.log(e);
-        throw e
-      }
-    },
-    async changePassword({ commit }, data) {
-      try {
-        await axios.post(`${URL}/reset-password/new`, data).catch(e => {
           commit('error', e.response.data)
         })
       } catch (e) {
