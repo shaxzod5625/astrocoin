@@ -1,22 +1,22 @@
 <template>
   <div id="modals" class="modal">
     <div id="modal-back" @click="closeModals" :class="{active: this.$store.state.receiveModal || this.$store.state.sendModal || this.$store.state.confirmLogout || this.$store.state.openCheque || this.openLogOut }"></div>
-    <div id="user-menu" v-if="this.$store.state.userModal" :class="{ active: this.$store.state.userModal }">
-      <div class="user-person">
+    <div id="user-menu" :class="{ active: this.$store.state.userModal }">
+      <router-link class="user-person" tag="div" to="/user-page">
         <div class="user-person-pic">
           <img :src="user.photo ? this.$store.state.url + user.photo : require(`../assets/default-user-pic.png`)" class="user-pic" alt="">
         </div>
-        <router-link class="user-info" tag="div" to="/user-page">
+        <div class="user-info">
           <div class="user-name">{{ user.name }}</div>
           <div class="user-id">{{ user.email }}</div>
-        </router-link>
-      </div>
+        </div>
+      </router-link>
       <div class="hr"></div>
       <ul class="other-user-menu">
         <li class="menu-item"><a @click.prevent="openConfirm" href="#" class="log-out-btn">Log Out</a></li>
       </ul>
     </div>
-    <div id="receive-coin" v-if="this.$store.state.receiveModal" :class="{ active: this.$store.state.receiveModal }">
+    <div id="receive-coin" :class="{ active: this.$store.state.receiveModal }">
       <div class="modal-header">
         <div class="modal-title">Receive</div>
         <div class="modal-tools">
@@ -35,11 +35,11 @@
           <i class="ai ai-copy-outline" @click="copy(user.wallet)"></i>
         </div>
         <div class="receive-share">
-          <button class="share-btn" @click="share"><i class="ai ai-share-outline"></i> Share</button>
+          <button class="share-btn" @click="share">Share <i class="ai ai-share-outline"></i></button>
         </div>
       </div>
     </div>
-    <div id="send-coin" v-if="this.$store.state.sendModal" :class="{ active: this.$store.state.sendModal }">
+    <div id="send-coin" :class="{ active: this.$store.state.sendModal }">
       <div class="modal-header">
         <div class="modal-title">Send</div>
         <div class="modal-tools">
@@ -72,7 +72,7 @@
         </div>
       </div>
     </div>
-    <div id="cheque-coin" v-if="this.$store.state.openCheque" :class="{ active: this.$store.state.openCheque }">
+    <div id="cheque-coin" :class="{ active: this.$store.state.openCheque }">
       <div class="top-brand">
         <div class="corp-logo"></div>
       </div>
@@ -112,7 +112,7 @@
         </div>
       </div>
     </div>
-    <div id="log-out" v-if="openLogOut" :class="{ active: openLogOut }">
+    <div id="log-out" :class="{ active: openLogOut }">
       <div class="modal-content">
         <div class="modal-header">
           <div class="modal-title">Log Out</div>
@@ -228,7 +228,7 @@ export default {
         if (error.name === 'NotAllowedError') {
           Toast.fire("ERROR: you need to grant camera access permission", '', 'error')
         } else if (error.name === 'NotFoundError') {
-          Toast.fire("Ошибка: На вашем устройстве не найдено камера!", '', 'error')
+          Toast.fire("ERROR: No camera found on your device!", '', 'error')
         } else if (error.name === 'NotSupportedError') {
           Toast.fire("ERROR: secure context required (HTTPS, localhost)", '', 'error')
         } else if (error.name === 'NotReadableError') {

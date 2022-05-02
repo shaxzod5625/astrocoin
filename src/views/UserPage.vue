@@ -31,7 +31,7 @@
           <router-link tag="li" to="/update-password"><i class="ai ai-key-outline"></i>Change password</router-link>
         </ul>
         <ul class="tools-items">
-          <li @click="logout"><i class="ai ai-key-outline"></i>Log Out</li>
+          <li @click="logout" class="btn-log-out"><i class="ai ai-log-out-outline"></i>Log Out</li>
         </ul>
       </div>
     </div>
