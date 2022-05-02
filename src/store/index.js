@@ -68,14 +68,10 @@ export default new Vuex.Store({
   actions: {
     async login({ commit }, user) {
       try {
-        const res = await axios.post(`${URL}/login`, user).catch(e => {
-          commit("error", e.response.data);
-        })
-        if (res) {
-          commit("setToken", res.data);
-        }
+        const res = await axios.post(`${URL}/login`, user)
+        commit("setToken", res.data);
       } catch (e) {
-        console.log(e);
+        commit("error", e.response.data);
         throw e;
       }
     },
@@ -85,69 +81,53 @@ export default new Vuex.Store({
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }).catch(e => {
-          commit('error', e.response.data)
         })
         commit('removeToken')
       } catch (e) {
-        console.log(e);
+        commit('error', e.response.data)
         throw e;
       }
     },
     async register({ commit }, user) {
       try {
-        const res = await axios.post(`${URL}/register`, user).catch(err => {
-          commit('error', err.response.data)
-        })
-        if (res) {
-          commit("setToken", res.data);
-        }
+        const res = await axios.post(`${URL}/register`, user)
+        commit("setToken", res.data);
       } catch (e) {
-        console.log(e);
+        commit('error', e.response.data)
         throw e;
       }
     },
     async getStack({ commit }) {
       try {
-        const res = await axios.get(`${URL}/stacks`).catch(err => {
-          commit('error', err.response.data)
-        })
-        if (res) {
-          commit("setStack", res.data);
-        }
+        const res = await axios.get(`${URL}/stacks`)
+        commit("setStack", res.data);
       } catch (e) {
-        console.log(e);
+        commit('error', err.response.data)
         throw e;
       }
     },
     async checkWallet({ commit }, address) {
       try {
-        const res = await axios.post(`${URL}/wallet`, {address: address}, {
+        const res = await axios.post(`${URL}/wallet`, { address: address }, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }).catch(e => {
-          commit('error', e.response.data)
         })
-        if (res) {
-          commit('setCheckWallet', res.data)
-        }
+        commit('setCheckWallet', res.data)
       } catch (e) {
-        console.log(e);
+        commit('error', e.response.data)
         throw e;
       }
     },
     async transfer({ commit }, data) {
       try {
-        const res = await axios.post(`${URL}/wallet/transfer`, data, {
+        await axios.post(`${URL}/wallet/transfer`, data, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }).catch(e => {
-          commit('error', e.response.data)
         })
       } catch (e) {
-        console.log(e);
+        commit('error', e.response.data)
         throw e;
       }
     },
@@ -157,21 +137,17 @@ export default new Vuex.Store({
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           }
-        }).catch(e => {
-          commit('error', e.response.data)
         })
       } catch (e) {
-        console.log(e);
+        commit('error', e.response.data)
         throw e
       }
     },
     async resetPassword({ commit }, email) {
       try {
-        await axios.post(`${URL}/reset-password`, email).catch(e => {
-          commit('error', e.response.data)
-        })
+        await axios.post(`${URL}/reset-password`, email)
       } catch (e) {
-        console.log(e);
+        commit('error', e.response.data)
         throw e
       }
     },
@@ -181,14 +157,10 @@ export default new Vuex.Store({
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }).catch(e => {
-          commit('error', e.response.data)
         })
-        if (res) {
-          commit('setWalletHistory', res.data)
-        }
+        commit('setWalletHistory', res.data)
       } catch (e) {
-        console.log(e);
+        commit('error', e.response.data)
         throw e;
       }
     },
@@ -198,14 +170,10 @@ export default new Vuex.Store({
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }).catch(e => {
-          commit('error', e.response.data)
         })
-        if (res) {
-          commit('setOrderHistory', res.data)
-        }
+        commit('setOrderHistory', res.data)
       } catch (e) {
-        console.log(e);
+        commit('error', e.response.data)
         throw e;
       }
     },
@@ -215,11 +183,9 @@ export default new Vuex.Store({
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }).catch(e => {
-          commit('error', e.response.data)
         })
       } catch (e) {
-        console.log(e)
+        commit('error', e.response.data)
         throw e;
       }
     },
@@ -229,14 +195,10 @@ export default new Vuex.Store({
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           },
-        }).catch(e => {
-          commit('error', e.response.data)
         })
-        if (res) {
-          commit('setUser', res.data)
-        }
+        commit('setUser', res.data)
       } catch (e) {
-        console.log(e)
+        commit('error', e.response.data)
         throw e
       }
     }

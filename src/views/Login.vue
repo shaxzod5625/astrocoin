@@ -62,6 +62,7 @@ export default {
           password: this.password
         })
         this.$router.push('/')
+        console.log('sadfaddas');
       } catch (e) {
         if (this.$store.state.errors) {
           for (const key in this.$store.state.errors) {
