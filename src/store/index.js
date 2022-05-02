@@ -28,7 +28,6 @@ export default new Vuex.Store({
     error(state, data) {
       if (data.errors) {
         state.errors = data.errors;
-        console.log(state.errors);
       } else {
         state.error = data.error;
       }
@@ -154,7 +153,7 @@ export default new Vuex.Store({
     },
     async updatePassword({ commit }, data) {
       try {
-        const res = await axios.post(`${URL}/user/password`, data, {
+        await axios.post(`${URL}/user/password`, data, {
           headers: {
             Authorization: `Bearer ${localStorage.getItem("token")}`,
           }
