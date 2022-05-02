@@ -258,7 +258,7 @@ export default {
         if (window.scrollY + window.innerHeight >= document.documentElement.scrollHeight && this.count >= 10) {
           this.loadHistory = true
           this.page++
-          const res = await axios.get(`http://astrum.uubek.com/api/transfers?page=${this.page}`, {
+          const res = await axios.get(`https://astrum.uubek.com/api/transfers?page=${this.page}`, {
             headers: {
               'Authorization': `Bearer ${localStorage.getItem('token')}`
             }
