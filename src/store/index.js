@@ -151,6 +151,14 @@ export default new Vuex.Store({
         throw e
       }
     },
+    async changePassword({ commit }, data) {
+      try {
+        await axios.post(`${URL}/reset-password/new`, data)
+      } catch (e) {
+        commit('error', e.response.data)
+        throw e
+      }
+    },
     async getHistory({ commit }) {
       try {
         const res = await axios.get(`${URL}/transfers`, {
@@ -198,6 +206,10 @@ export default new Vuex.Store({
         })
         commit('setUser', res.data)
       } catch (e) {
+        if (e.response.status === 401) {
+          commit('removeToken')
+          window.location.href = '/login'
+        }
         commit('error', e.response.data)
         throw e
       }

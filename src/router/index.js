@@ -23,7 +23,7 @@ const routes = [
     meta: { auth: false }
   },
   {
-    path: '/repass',
+    path: '/reset-password',
     name: 'Repass',
     component: () => import('../views/Repas'),
     meta: { auth: false }

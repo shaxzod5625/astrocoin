@@ -51,7 +51,6 @@ export default {
           email: this.email
         })
         Toast.fire('Ссылка на сброс отправлено вам на почту', '', 'success')
-        this.$router.push('/repass')
         this.email = ''
         this.success = true
       } catch (e) {

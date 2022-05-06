@@ -10,13 +10,14 @@
             <div class="login-desc">Введите новый пароль для аккаунта. Минималная длина 8 символов.</div>
             <form action="#" method="post" class="form-modal" @submit.prevent="submit">
               <div class="form-control">
-                <label for="password">Новый пароль:</label>
+                <label for="password">New password:</label>
                 <input type="password" name="password" id="password" v-model="password">
               </div>
               <div class="form-control">
-                <label for="verify_pass">Подтвердите пароль:</label>
+                <label for="verify_pass">Confirm password:</label>
                 <input type="password" name="pass_two" id="verify_pass" v-model="confirmation">
-                <input type="text" v-model="token">
+                <input type="text" v-model="token" hidden>
+                <input type="email" v-model="email" hidden>
               </div>
               <div class="form-control submit-btn">
                 <input type="submit" value="Сохранить">
@@ -35,7 +36,8 @@ export default {
   data: () => ({
     password: '',
     confirmation: '',
-    token: ''
+    token: '',
+    email: ''
   }),
   validations: {
     password: {
@@ -47,6 +49,10 @@ export default {
       minLength: minLength(8),
       sameAs: sameAs('password'),
     },
+  },
+  mounted() {
+    this.token = this.$route.query.token;
+    this.email = this.$route.query.email;
   },
   methods: {
     async submit() {
@@ -66,11 +72,10 @@ export default {
           password: this.password,
           password_confirmation: this.confirmation,
           token: this.token,
+          email: this.email
         })
         Toast.fire('Пароль успешно изменен', '', 'success')
-        setTimeout(() => {
-          this.$router.push('/login')
-        }, 1000)
+        this.$router.push('/login')
       } catch (e) {
         if (this.$store.state.errors) {
           for (const key in this.$store.state.errors) {
