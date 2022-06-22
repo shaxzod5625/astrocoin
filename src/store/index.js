@@ -1,8 +1,7 @@
 import Vue from "vue";
 import Vuex from "vuex";
 import axios from "axios";
-// const URL = "http://127.0.0.1:8000/api";
-const URL = 'https://astrum.uubek.com/api';
+const URL = "http://127.0.0.1:8000/api";
 Vue.use(Vuex);
 
 
